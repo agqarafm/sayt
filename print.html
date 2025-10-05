@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dəqiq Çap Ölçüsü ilə Proqram</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+        :root{--primary-color:#6a11cb;--secondary-color:#2575fc;--background-color:#f0f2f5;--card-background:#fff;--text-color:#333;--shadow-color:rgba(0,0,0,.1);--border-radius:12px;--success-color:#28a745}body{font-family:'Montserrat',sans-serif;background-color:var(--background-color);color:var(--text-color);margin:0;padding:2rem;display:flex;justify-content:center;align-items:flex-start;min-height:100vh}.container{width:100%;max-width:800px;background-color:var(--card-background);border-radius:var(--border-radius);box-shadow:0 10px 30px var(--shadow-color);padding:2.5rem}.header{text-align:center;margin-bottom:2.5rem;border-bottom:1px solid #e0e0e0;padding-bottom:1.5rem}.header h1{margin:0;font-size:2.5rem;font-weight:600;background:linear-gradient(45deg,var(--primary-color),var(--secondary-color));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.header p{margin-top:.5rem;color:#666;font-size:1.1rem}.image-uploader{display:flex;flex-direction:column;gap:2rem;margin-bottom:2.5rem}.file-input-wrapper{position:relative;border:2px dashed #ccc;border-radius:var(--border-radius);transition:border-color .3s,background-color .3s}.file-input-wrapper:hover{border-color:var(--primary-color);background-color:#fafafa}.file-input-wrapper input[type=file]{width:.1px;height:.1px;opacity:0;overflow:hidden;position:absolute;z-index:-1}.file-input-label{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;cursor:pointer;width:100%;height:100%;box-sizing:border-box}.file-input-label .main-label-text{font-weight:600;color:var(--primary-color);font-size:1.1rem}.file-input-label .file-name{margin-top:1rem;font-style:italic;color:#555;word-break:break-all}.image-preview-area{display:flex;flex-direction:column;gap:2.5rem;align-items:center}.image-control-block{width:100%;display:flex;flex-direction:column;align-items:center;gap:1.5rem}.hidden{display:none!important}.image-preview{max-width:100%;border-radius:var(--border-radius);box-shadow:0 4px 15px var(--shadow-color);object-fit:contain;transition:width .2s ease}.size-controls{width:80%;display:flex;align-items:center;gap:1rem}.size-controls label{font-weight:600}.size-controls input[type=range]{flex-grow:1;cursor:pointer}.size-controls .size-value{font-weight:600;min-width:45px;text-align:right;color:var(--primary-color)}.controls{text-align:center;margin-top:2.5rem}.print-btn{background:linear-gradient(45deg,var(--primary-color),var(--secondary-color));color:#fff;border:none;padding:1rem 2.5rem;font-size:1.2rem;font-weight:600;border-radius:50px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 15px rgba(0,0,0,.2)}.print-btn:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+        .modal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7);z-index:1000;display:flex;justify-content:center;align-items:center}.modal-content{background:#fff;padding:2rem;border-radius:var(--border-radius);box-shadow:0 5px 25px rgba(0,0,0,.3);width:90%;max-width:800px;text-align:center}.modal-header{font-size:1.5rem;font-weight:600;margin-bottom:1.5rem;color:var(--text-color)}.modal-body{margin-bottom:1.5rem}.modal-body img{max-width:100%;border-radius:var(--border-radius);box-shadow:0 4px 15px var(--shadow-color);margin-bottom:1.5rem}.modal-footer{text-align:right}.modal-btn{border:none;padding:.8rem 1.5rem;font-size:1rem;font-weight:600;border-radius:50px;cursor:pointer;transition:all .2s;background-color:var(--success-color);color:#fff}.modal-btn:hover{background-color:#218838}
+        
+        /* === ÇAP STİLLƏRİNDƏ EDİLƏN ƏSAS DÜZƏLİŞ === */
+        @media print {
+            body { 
+                padding: 1cm 0; /* Vərəqin yuxarı və aşağısında boşluq */
+                margin: 0; 
+                background-color: #fff; 
+            }
+            /* Bütün lazımsız elementləri gizlədirik */
+            .header, .image-uploader, .controls, .size-controls, .hidden, .modal-backdrop { 
+                display: none !important; 
+            }
+            .container { 
+                box-shadow: none; 
+                padding: 0; 
+                border-radius: 0; 
+                width: 100%; 
+                max-width: 100%; 
+            }
+            .image-preview-area {
+                padding: 0 1cm; /* Vərəqin sol və sağında boşluq */
+            }
+            .image-control-block {
+                display: block !important;
+                width: 100%;
+                page-break-inside: avoid; /* Şəklin səhifə ortasında bölünməsinin qarşısını alır */
+                margin: 0 auto 2cm auto; /* Şəkillər arasında boşluq */
+                text-align: center; /* Şəkli öz bloku içində mərkəzə gətirir */
+            }
+            .image-preview {
+                /* ƏN VACİB DƏYİŞİKLİK: Sərt qaydalar ləğv edildi ki, JavaScript-in verdiyi ölçü işləsin */
+                display: inline-block !important;
+                max-width: 100%; 
+                height: auto; /* Hündürlük avtomatik təyin edilsin */
+                box-shadow: none;
+                border-radius: 0;
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header"><h1>Dəqiq Çap Ölçüsü ilə Proqram</h1><p>Şəkilləri seçin, ölçüsünü təyin edin və çap edin</p></div>
+        <div class="image-uploader">
+            <div class="file-input-wrapper"><input type="file" id="imageInput1" accept="image/*"><label for="imageInput1" class="file-input-label"><span class="main-label-text">1-ci Şəkli Seçin</span><span class="file-name" id="fileName1">Heç bir fayl seçilməyib</span></label></div>
+            <div class="file-input-wrapper"><input type="file" id="imageInput2" accept="image/*"><label for="imageInput2" class="file-input-label"><span class="main-label-text">2-ci Şəkli Seçin</span><span class="file-name" id="fileName2">Heç bir fayl seçilməyib</span></label></div>
+        </div>
+        <div id="image-preview-area" class="image-preview-area">
+            <div id="imageControlBlock1" class="image-control-block hidden"><img id="imagePreview1" class="image-preview" alt="Birinci şəkil önbaxış"><div class="size-controls"><label for="sizeSlider1">Ölçü:</label><input type="range" id="sizeSlider1" min="20" max="100" value="100"><span id="sizeValue1" class="size-value">100%</span></div></div>
+            <div id="imageControlBlock2" class="image-control-block hidden"><img id="imagePreview2" class="image-preview" alt="İkinci şəkil önbaxış"><div class="size-controls"><label for="sizeSlider2">Ölçü:</label><input type="range" id="sizeSlider2" min="20" max="100" value="100"><span id="sizeValue2" class="size-value">100%</span></div></div>
+        </div>
+        <div class="controls"><button id="printButton" class="print-btn">Çap Et</button></div>
+    </div>
+
+    <div id="size-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="modal-header">Şəklin İlkin Ölçüsünü Təyin Edin</div>
+            <div class="modal-body">
+                <img id="image-to-size" src="">
+                <div class="size-controls">
+                    <label for="modalSizeSlider">Ölçü:</label>
+                    <input type="range" id="modalSizeSlider" min="20" max="100" value="100">
+                    <span id="modalSizeValue" class="size-value">100%</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-size-button" class="modal-btn">Təsdiqlə</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var printButton = document.getElementById('printButton');
+            var sizeModal = document.getElementById('size-modal');
+            var imageToSize = document.getElementById('image-to-size');
+            var modalSizeSlider = document.getElementById('modalSizeSlider');
+            var modalSizeValue = document.getElementById('modalSizeValue');
+            var confirmSizeButton = document.getElementById('confirm-size-button');
+
+            function showSizeModal(file, targetIds) {
+                sizeModal.setAttribute('data-target-preview', targetIds.preview);
+                sizeModal.setAttribute('data-target-control-block', targetIds.controlBlock);
+                sizeModal.setAttribute('data-target-slider', targetIds.slider);
+                sizeModal.setAttribute('data-target-size-value', targetIds.sizeValue);
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imageToSize.src = e.target.result;
+                    modalSizeSlider.value = 100;
+                    modalSizeValue.textContent = '100%';
+                    imageToSize.style.width = '100%';
+                    sizeModal.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function hideSizeModal() {
+                sizeModal.classList.add('hidden');
+            }
+
+            function setupImageUploader(inputId, previewId, fileNameId, controlBlockId, sliderId, sizeValueId) {
+                var input = document.getElementById(inputId);
+                var slider = document.getElementById(sliderId);
+                var sizeValue = document.getElementById(sizeValueId);
+
+                input.addEventListener('change', function (event) {
+                    var file = event.target.files[0];
+                    if (file) {
+                        document.getElementById(fileNameId).textContent = file.name;
+                        showSizeModal(file, {
+                            preview: previewId,
+                            controlBlock: controlBlockId,
+                            slider: sliderId,
+                            sizeValue: sizeValueId
+                        });
+                    }
+                });
+
+                slider.addEventListener('input', function (event) {
+                    var previewEl = document.getElementById(previewId);
+                    var newSize = event.target.value;
+                    previewEl.style.width = newSize + '%';
+                    sizeValue.textContent = newSize + '%';
+                });
+            }
+
+            modalSizeSlider.addEventListener('input', function(e) {
+                var newSize = e.target.value;
+                imageToSize.style.width = newSize + '%';
+                modalSizeValue.textContent = newSize + '%';
+            });
+
+            confirmSizeButton.addEventListener('click', function () {
+                var previewId = sizeModal.getAttribute('data-target-preview');
+                var controlBlockId = sizeModal.getAttribute('data-target-control-block');
+                var sliderId = sizeModal.getAttribute('data-target-slider');
+                var sizeValueId = sizeModal.getAttribute('data-target-size-value');
+
+                if (!previewId || !controlBlockId || !sliderId || !sizeValueId) {
+                    return;
+                }
+
+                var targetPreview = document.getElementById(previewId);
+                var targetControlBlock = document.getElementById(controlBlockId);
+                var targetSlider = document.getElementById(sliderId);
+                var targetSizeValue = document.getElementById(sizeValueId);
+
+                var finalSize = modalSizeSlider.value;
+                
+                targetPreview.src = imageToSize.src;
+                targetPreview.style.width = finalSize + '%';
+                targetSlider.value = finalSize;
+                targetSizeValue.textContent = finalSize + '%';
+                
+                targetControlBlock.classList.remove('hidden');
+                hideSizeModal();
+            });
+
+            setupImageUploader('imageInput1', 'imagePreview1', 'fileName1', 'imageControlBlock1', 'sizeSlider1', 'sizeValue1');
+            setupImageUploader('imageInput2', 'imagePreview2', 'fileName2', 'imageControlBlock2', 'sizeSlider2', 'sizeValue2');
+
+            printButton.addEventListener('click', function () {
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+</html>
