@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Təkmil Şəkil Çapı</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            margin-top: 0.5rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .image-uploader {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .file-input-wrapper {
+            width: 100%;
+            position: relative;
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: var(--primary-color);
+            background-color: #fafafa;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .file-input-wrapper label {
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .file-input-wrapper .file-name {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #555;
+        }
+
+        .image-preview-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .image-control-block {
+            width: 100%;
+            display: none; /* Initially hidden, shown with JS */
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .image-preview {
+            width: 100%; /* Default width */
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px var(--shadow-color);
+            object-fit: contain;
+        }
+        
+        .size-controls {
+            width: 80%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .size-controls label {
+            font-weight: 600;
+        }
+
+        .size-controls input[type="range"] {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+
+        .size-controls .size-value {
+            font-weight: 600;
+            min-width: 45px;
+            text-align: right;
+            color: var(--primary-color);
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        .print-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== PRINT SPECIFIC STYLES ===== */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                background-color: #fff;
+            }
+
+            /* Hide everything except the image preview area */
+            .header, .image-uploader, .controls, .size-controls {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Main container for images on the printed page */
+            .image-preview-area {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around; /* Distribute space between images */
+                align-items: center;
+                width: 100%;
+                height: 100vh; /* Use the full height of the viewport/page */
+                padding: 0;
+                margin: 0;
+            }
+            
+            .image-control-block {
+                display: flex !important; /* Ensure it's visible for printing */
+                width: 90%; /* Add some margin */
+                height: 48vh; /* Each block takes slightly less than half the page height */
+                justify-content: center;
+                align-items: center;
+                page-break-inside: avoid;
+            }
+
+            .image-preview {
+                display: block !important;
+                width: auto;
+                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                object-fit: contain; /* Ensure the whole image fits without cropping */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Təkmil Şəkil Çapı</h1>
+            <p>Çap etmək üçün 2 şəkil seçin və ölçüsünü tənzimləyin</p>
+        </div>
+
+        <div class="image-uploader">
+            <div class="file-input-wrapper">
+                <input type="file" id="imageInput1" accept="image/*">
+                <label for="imageInput1">1-ci Şəkli Seçin</label>
+                <p class="file-name" id="fileName1">Heç bir fayl seçilməyib</p>
+            </div>
+            <div class="file-input-wrapper">
+                <input type="file" id="imageInput2" accept="image/*">
+                <label for="imageInput2">2-ci Şəkli Seçin</label>
+                <p class="file-name" id="fileName2">Heç bir fayl seçilməyib</p>
+            </div>
+        </div>
+
+        <div id="image-preview-area" class="image-preview-area">
+            <div id="imageControlBlock1" class="image-control-block">
+                <img id="imagePreview1" class="image-preview" alt="Birinci şəkil önbaxış">
+                <div class="size-controls">
+                    <label for="sizeSlider1">Ölçü:</label>
+                    <input type="range" id="sizeSlider1" min="20" max="100" value="100">
+                    <span id="sizeValue1" class="size-value">100%</span>
+                </div>
+            </div>
+            
+            <div id="imageControlBlock2" class="image-control-block">
+                <img id="imagePreview2" class="image-preview" alt="İkinci şəkil önbaxış">
+                <div class="size-controls">
+                    <label for="sizeSlider2">Ölçü:</label>
+                    <input type="range" id="sizeSlider2" min="20" max="100" value="100">
+                    <span id="sizeValue2" class="size-value">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="printButton" class="print-btn">Çap Et</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const printButton = document.getElementById('printButton');
+
+            // Function to set up a single image input, preview, and slider
+            function setupImageUploader(inputId, previewId, fileNameId, controlBlockId, sliderId, sizeValueId) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                const fileName = document.getElementById(fileNameId);
+                const controlBlock = document.getElementById(controlBlockId);
+                const slider = document.getElementById(sliderId);
+                const sizeValue = document.getElementById(sizeValueId);
+
+                // Handle file selection
+                input.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.src = e.target.result;
+                            controlBlock.style.display = 'flex'; // Show the image and its controls
+                        };
+                        reader.readAsDataURL(file);
+                        fileName.textContent = file.name;
+                    }
+                });
+
+                // Handle size slider
+                slider.addEventListener('input', (event) => {
+                    const newSize = event.target.value;
+                    preview.style.width = `${newSize}%`;
+                    sizeValue.textContent = `${newSize}%`;
+                });
+            }
+
+            // Set up both uploaders
+            setupImageUploader('imageInput1', 'imagePreview1', 'fileName1', 'imageControlBlock1', 'sizeSlider1', 'sizeValue1');
+            setupImageUploader('imageInput2', 'imagePreview2', 'fileName2', 'imageControlBlock2', 'sizeSlider2', 'sizeValue2');
+
+            // Handle print button click
+            printButton.addEventListener('click', () => {
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+</html>
