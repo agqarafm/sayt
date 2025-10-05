@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tam Müstəqil Şəkil Çap Proqramı</title>
+    
+    <style>
+        .cropper-container{font-size:0;line-height:0;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;direction:ltr;touch-action:none}.cropper-container img{display:block;width:100%;min-width:0!important;max-width:none!important;height:100%;min-height:0!important;max-height:none!important;image-orientation:0deg}.cropper-wrap-box,.cropper-canvas,.cropper-drag-box,.cropper-crop-box,.cropper-modal{position:absolute;top:0;right:0;bottom:0;left:0}.cropper-wrap-box{overflow:hidden}.cropper-drag-box{background-color:#fff;opacity:0}.cropper-modal{background-color:#000;opacity:.5}.cropper-view-box{display:block;overflow:hidden;width:100%;height:100%;outline:1px solid #39f;outline-color:rgba(51,153,255,.75)}.cropper-dashed{position:absolute;display:block;border:0 dashed #eee;opacity:.5}.cropper-dashed.dashed-h{top:33.33333%;left:0;width:100%;height:33.33333%;border-top-width:1px;border-bottom-width:1px}.cropper-dashed.dashed-v{top:0;left:33.33333%;width:33.33333%;height:100%;border-right-width:1px;border-left-width:1px}.cropper-center{position:absolute;top:50%;left:50%;display:block;width:0;height:0;opacity:.75}.cropper-center:before,.cropper-center:after{position:absolute;display:block;background-color:#eee;content:" "}.cropper-center:before{top:0;left:-3px;width:7px;height:1px}.cropper-center:after{top:-3px;left:0;width:1px;height:7px}.cropper-face,.cropper-line,.cropper-point{position:absolute;display:block;width:100%;height:100%;opacity:.1}.cropper-face{top:0;left:0;background-color:#fff}.cropper-line{background-color:#39f}.cropper-line.line-e{top:0;right:-3px;width:5px;cursor:e-resize}.cropper-line.line-n{top:-3px;left:0;height:5px;cursor:n-resize}.cropper-line.line-w{top:0;left:-3px;width:5px;cursor:w-resize}.cropper-line.line-s{bottom:-3px;left:0;height:5px;cursor:s-resize}.cropper-point{width:5px;height:5px;background-color:#39f;opacity:.75}.cropper-point.point-e{top:50%;right:-3px;margin-top:-3px;cursor:e-resize}.cropper-point.point-n{top:-3px;left:50%;margin-left:-3px;cursor:n-resize}.cropper-point.point-w{top:50%;left:-3px;margin-top:-3px;cursor:w-resize}.cropper-point.point-s{bottom:-3px;left:50%;margin-left:-3px;cursor:s-resize}.cropper-point.point-ne{top:-3px;right:-3px;cursor:ne-resize}.cropper-point.point-nw{top:-3px;left:-3px;cursor:nw-resize}.cropper-point.point-sw{bottom:-3px;left:-3px;cursor:sw-resize}.cropper-point.point-se{bottom:-3px;right:-3px;cursor:se-resize}@media (min-width:768px){.cropper-point.point-e{margin-top:-4px}.cropper-point.point-n{margin-left:-4px}.cropper-point.point-w{margin-top:-4px}.cropper-point.point-s{margin-left:-4px}}@media (min-width:992px){.cropper-point.point-e{margin-top:-5px}.cropper-point.point-n{margin-left:-5px}.cropper-point.point-w{margin-top:-5px}.cropper-point.point-s{margin-left:-5px}}@media (min-width:1200px){.cropper-point.point-e{margin-top:-6px}.cropper-point.point-n{margin-left:-6px}.cropper-point.point-w{margin-top:-6px}.cropper-point.point-s{margin-left:-6px}}.cropper-point.point-ne,.cropper-point.point-nw,.cropper-point.point-sw,.cropper-point.point-se{width:20px;height:20px;background-color:transparent;opacity:1}.cropper-point.point-ne:before,.cropper-point.point-nw:before,.cropper-point.point-sw:before,.cropper-point.point-se:before{position:absolute;display:block;width:100%;height:100%;background-color:inherit;content:" ";opacity:.75;border:1px solid #39f}.cropper-point.point-ne{top:-10px;right:-10px}.cropper-point.point-nw{top:-10px;left:-10px}.cropper-point.point-sw{bottom:-10px;left:-10px}.cropper-point.point-se{bottom:-10px;right:-10px}.cropper-point.point-se:after,.cropper-point.point-se:before{position:absolute;display:block;background-color:#39f;content:" "}.cropper-point.point-se:before{top:-5px;right:4px;bottom:4px;left:-5px;width:1px;height:auto}.cropper-point.point-se:after{top:4px;right:-5px;bottom:-5px;left:4px;width:auto;height:1px}.cropper-disabled .cropper-drag-box,.cropper-disabled .cropper-face,.cropper-disabled .cropper-line,.cropper-disabled .cropper-point{cursor:not-allowed}.cropper-hide{position:fixed;top:0;left:0;display:block;width:100%;height:100%;background:0 0;opacity:0}.cropper-hidden{display:none!important}.cropper-invisible{opacity:0}.cropper-move{cursor:move}.cropper-crop{cursor:crosshair}.cropper-bg{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC")}
+    </style>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --success-color: #28a745;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 2.5rem;
+        }
+
+        .header { text-align: center; margin-bottom: 2.5rem; border-bottom: 1px solid #e0e0e0; padding-bottom: 1.5rem; }
+        .header h1 { margin: 0; font-size: 2.5rem; font-weight: 600; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { margin-top: 0.5rem; color: #666; font-size: 1.1rem; }
+
+        .image-uploader { display: flex; flex-direction: column; gap: 2rem; margin-bottom: 2.5rem; }
+        
+        .file-input-wrapper { position: relative; border: 2px dashed #ccc; border-radius: var(--border-radius); transition: border-color 0.3s, background-color 0.3s; }
+        .file-input-wrapper:hover { border-color: var(--primary-color); background-color: #fafafa; }
+        .file-input-wrapper input[type="file"] { width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1; }
+        .file-input-label { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; cursor: pointer; width: 100%; height: 100%; box-sizing: border-box; }
+        .file-input-label .main-label-text { font-weight: 600; color: var(--primary-color); font-size: 1.1rem; }
+        .file-input-label .file-name { margin-top: 1rem; font-style: italic; color: #555; word-break: break-all; }
+
+        .image-preview-area { display: flex; flex-direction: column; gap: 2.5rem; align-items: center; }
+        .image-control-block { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .hidden { display: none !important; }
+        .image-preview { width: 100%; max-width: 100%; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); object-fit: contain; }
+        
+        .size-controls { width: 80%; display: flex; align-items: center; gap: 1rem; }
+        .size-controls label { font-weight: 600; }
+        .size-controls input[type="range"] { flex-grow: 1; cursor: pointer; }
+        .size-controls .size-value { font-weight: 600; min-width: 45px; text-align: right; color: var(--primary-color); }
+
+        .controls { text-align: center; margin-top: 2.5rem; }
+        .print-btn { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 1rem 2.5rem; font-size: 1.2rem; font-weight: 600; border-radius: 50px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .print-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); }
+        
+        .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; display: flex; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 5px 25px rgba(0,0,0,0.3); width: 90%; max-width: 800px; }
+        .modal-header { text-align: center; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-color); }
+        .modal-body { max-height: 60vh; overflow: hidden; }
+        .modal-body img { max-width: 100%; display: block; }
+        .modal-footer { margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; }
+        .modal-btn { border: none; padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: 600; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
+        #crop-button { background-color: var(--success-color); color: white; }
+        #crop-button:hover { background-color: #218838; }
+        #cancel-button { background-color: #ddd; color: var(--text-color); }
+        #cancel-button:hover { background-color: #ccc; }
+
+        @media print {
+            body { padding: 0; margin: 0; background-color: #fff; }
+            .header, .image-uploader, .controls, .size-controls, .hidden, .modal-backdrop { display: none !important; }
+            .container { box-shadow: none; padding: 0; border-radius: 0; width: 100%; max-width: 100%; }
+            .image-preview-area { display: flex; flex-direction: column; justify-content: space-around; align-items: center; width: 100%; height: 100vh; padding: 0; margin: 0; }
+            .image-control-block { display: flex !important; width: 90%; height: 48vh; justify-content: center; align-items: center; page-break-inside: avoid; }
+            .image-preview { display: block !important; width: auto; height: 100%; max-width: 100%; max-height: 100%; box-shadow: none; border-radius: 0; object-fit: contain; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header"><h1>Tam Müstəqil Proqram</h1><p>Şəkilləri seçin, kəsin və çap edin</p></div>
+        <div class="image-uploader">
+            <div class="file-input-wrapper"><input type="file" id="imageInput1" accept="image/*"><label for="imageInput1" class="file-input-label"><span class="main-label-text">1-ci Şəkli Seçin</span><span class="file-name" id="fileName1">Heç bir fayl seçilməyib</span></label></div>
+            <div class="file-input-wrapper"><input type="file" id="imageInput2" accept="image/*"><label for="imageInput2" class="file-input-label"><span class="main-label-text">2-ci Şəkli Seçin</span><span class="file-name" id="fileName2">Heç bir fayl seçilməyib</span></label></div>
+        </div>
+        <div id="image-preview-area" class="image-preview-area">
+            <div id="imageControlBlock1" class="image-control-block hidden"><img id="imagePreview1" class="image-preview" alt="Birinci şəkil önbaxış"><div class="size-controls"><label for="sizeSlider1">Ölçü:</label><input type="range" id="sizeSlider1" min="20" max="100" value="100"><span id="sizeValue1" class="size-value">100%</span></div></div>
+            <div id="imageControlBlock2" class="image-control-block hidden"><img id="imagePreview2" class="image-preview" alt="İkinci şəkil önbaxış"><div class="size-controls"><label for="sizeSlider2">Ölçü:</label><input type="range" id="sizeSlider2" min="20" max="100" value="100"><span id="sizeValue2" class="size-value">100%</span></div></div>
+        </div>
+        <div class="controls"><button id="printButton" class="print-btn">Çap Et</button></div>
+    </div>
+
+    <div id="crop-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="modal-header">Şəkli Kəsin</div>
+            <div class="modal-body"><img id="image-to-crop" src=""></div>
+            <div class="modal-footer"><button id="cancel-button" class="modal-btn">Ləğv Et</button><button id="crop-button" class="modal-btn">Kəs və Təsdiqlə</button></div>
+        </div>
+    </div>
+
+    <script>
+    !function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):(t=t||self).Cropper=e()}(this,function(){"use strict";function t(t){return(t=(t=t&&t.Math==Math?t:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{}).document)&&"string"==typeof t.documentElement.style.transform}var e={};function i(t){return e[t]}var n=1;function o(t){var o=++n;return e[o]=t,o}function r(t){var r=i(t);return r&&delete e[r.id],r}function a(t,e){for(var i=arguments.length,n=new Array(i>2?i-2:0),o=2;o<i;o++)n[o-2]=arguments[o];if("function"==typeof t)return t.apply(e,n);if(null==t)return}var s="undefined"!=typeof window?window:{};function h(t){return"object"==typeof t&&null!==t}function c(t){return"string"==typeof t}var l=/^e\.g\., \d+$/;function u(t){return c(t)&&!isNaN(t)&&!l.test(t)}function d(t){return"number"==typeof t&&!isNaN(t)}function p(t){return"function"==typeof t}function f(t){return"boolean"==typeof t}function m(t){return h(t)&&"length"in t}function g(t,e){Object.keys(t).forEach(function(i){e(t[i],i)})}function v(t,e){m(t)&&t.forEach(function(t,i){e(t,i)})}function b(t){return"HTMLCanvasElement"===t.constructor.name}var y="undefined"!=typeof document?document:{};function w(t){return c(t)?y.querySelector(t):t}var x={};function C(t){return x[t]&&x[t].loaded}var M=/^data:/;function k(t){return M.test(t)}var D=/^data:image\/jpeg.*;base64,/;function Y(t){return D.test(t)}var O,T="cropper",E="all",N="crop",A="move",L="zoom",R="e",W="w",S="s",H="n",B="ne",I="nw",P="sw",z="se",j="ns-resize",F="ew-resize",U="nesw-resize",X="nwse-resize",q="move",G="crop",V="pointer",K=T+"-container",Z=T+"-canvas",J=T+"-drag-box",Q=T+"-crop-box",$=T+"-modal",tt=T+"-hide",et=T+"-hidden",it=T+"-invisible",nt=T+"-move",ot=T+"-crop",rt=T+"-disabled",at=T+"-bg",st=T+"Action",ht=T+"Preview",ct="crop",lt="cropend",ut="cropmove",dt="cropstart",pt="dblclick",ft="load",mt="error",gt="ready",vt="resize",bt="zoom",yt="image/jpeg",wt=/(e|w|s|n|se|sw|ne|nw|all|crop|move|zoom)/i,xt="preview",Ct="action",Mt="cropBox",kt="imageData",Dt="initial",Yt="set",Ot="autoCropArea",Tt=function(t,e){return h(t)?(g(t,function(i,n){e(i,n)}),t):e},Et={set:function(t,e){var i,n={};return h(t)?g(t,function(t,o){(i=Et[o])&&p(i)?i.call(this,t):n[o]=t}):c(t)&&(i=this[t])&&p(i)?n=i.call(this,e):n[t]=e,n}};var Nt={render:function(){var t=this;t.initContainer(),t.initCanvas(),t.initCropBox(),t.renderCanvas(),t.cropped&&t.renderCropBox()},initContainer:function(){var t=this.options,e=this.element,i=this.container,n=this.cropper;n.style.cssText="width: "+i.width+"px; height: "+i.height+"px",e.parentNode.insertBefore(n,e.nextSibling)},initCanvas:function(){var t=this.options,e=this.container,i=this.canvasData,n=this.canvas,o={aspectRatio:i.aspectRatio,width:e.width,height:e.height};this.canvas=o,t.rotatable||(o.rotate=0),t.scalable||(o.scaleX=1,o.scaleY=1),this.limitCanvas(!0,!0),n.style.cssText="width: "+o.width+"px; height: "+o.height+"px; left: "+o.left+"px; top: "+o.top+"px; transform: "+function(t){var e=t.rotate,i=t.scaleX,n=t.scaleY;if(d(e)&&0!==e)return"rotate("+e+"deg) scale("+i+","+n+")";if(1!==i||1!==n)return"scale("+i+","+n+")"}(o)},initCropBox:function(){var t=this.options,e=this.cropBoxData,i=this.canvasData.aspectRatio,n=t.aspectRatio,o=Number(t.autoCropArea)||.8,r={width:e.width,height:e.height};n&&(r.width*i>r.height?r.height=r.width/n:r.width=r.height*n);var a=this.canvas,s={width:a.width*o,height:a.height*o};r.width*i>r.height?(r.height=Math.min(s.height,r.width/i),r.width=r.height*i):(r.width=Math.min(s.width,r.height*i),r.height=r.width/i),r.minWidth=e.minWidth,r.minHeight=e.minHeight,n?(e.minWidth?r.minHeight=e.minWidth/n:e.minHeight&&(r.minWidth=e.minHeight*n)):e.minWidth?(r.minWidth=e.minWidth,r.minHeight=e.minHeight):(r.minWidth=0,r.minHeight=0),r.left=(a.width-r.width)/2,r.top=(a.height-r.height)/2,r.oldLeft=r.left,r.oldTop=r.top,this.cropBox=r,this.limitCropBox(!0,!0),this.initialCropBox=JSON.parse(JSON.stringify(r))},limitCanvas:function(t,e){var i,n,o,r,a,s,h=this.options,c=this.container,l=this.canvas,u=l.aspectRatio,p=c.width,f=c.height,m=l.width,g=l.height,v=l.left,b=l.top;t&&(i=m,n=g,m>p||g>f?m*f>g*p?m=p:g=f:(m=p,g=f),o=(m-i)/2,r=(g-n)/2,v=l.left-o,b=l.top-r),e&&(v>0?v=0:v+m<p&&(v=p-m),b>0?b=0:b+g<f&&(b=f-g)),h.strict&&(e?v+m-p<1e-11&&(v=p-m):v>0&&(v=0),e?b+g-f<1e-11&&(b=f-g):b>0&&(b=0)),a=m/u,s=g,i=m,n=g,l.width=m,l.height=g,l.left=v,l.top=b},renderCanvas:function(t){var e=this.canvas,i=this.image;t&&(i.style.cssText="width: "+e.width+"px; height: "+e.height+"px; margin-left: "+e.left+"px; margin-top: "+e.top+"px; transform: "+function(t){var e=t.rotate,i=t.scaleX,n=t.scaleY;if(d(e)&&0!==e)return"rotate("+e+"deg) scale("+i+","+n+")";if(1!==i||1!==n)return"scale("+i+","+n+")"}(e)),this.preview()},limitCropBox:function(t,e){var i=this.options,n=this.container,o=this.canvas,r=this.cropBox,a=i.aspectRatio,s=n.width,h=n.height,c=o.width,l=o.height,u=o.left,p=o.top,f=r.width,m=r.height,g=r.left,v=r.top;t&&(f>c?f=c:f<0&&(f=0),m>l?m=l:m<0&&(m=0)),a&&(f*o.aspectRatio>m?m=f/a:f=m*a,f>c&&m>l?f>c?(f=c,m=c/a):m>l&&(m=l,f=l*a):f>c?(f=c,m=c/a):m>l&&(m=l,f=l*a),r.minWidth?m=r.minWidth/a:r.minHeight&&(f=r.minHeight*a)),f<r.minWidth&&(f=r.minWidth),m<r.minHeight&&(m=r.minHeight),e&&(g<u?g=u:g+f>u+c&&(g=u+c-f),v<p?v=p:v+m>p+l&&(v=p+l-m)),r.oldLeft=r.left,r.oldTop=r.top,r.width=f,r.height=m,r.left=g,r.top=v},renderCropBox:function(){var t=this.options,e=this.container,i=this.cropBox;i.width>e.width&&!t.strict&&(i.left-=(i.width-e.width)/2),i.height>e.height&&!t.strict&&(i.top-=(i.height-e.height)/2),i.width=Math.min(i.width,e.width),i.height=Math.min(i.height,e.height),this.cropBox=i,this.limitCropBox(!0,!0),this.cropper.querySelector("."+Q).style.cssText="width: "+i.width+"px; height: "+i.height+"px; transform: translate("+i.left+"px, "+i.top+"px);",this.cropped&&this.preview()},output:function(){this.preview(),a(this.element,"crop",this.getData())}},At=Number.isNaN||s.isNaN;function Lt(t){return d(t)&&!At(t)}var Rt="undefined"!=typeof document?document:{},Wt=Rt.createElement("canvas"),St="undefined"!=typeof Wt.getContext?function(t){return Lt(t.width)&&Lt(t.height)?(Wt.width=t.width,Wt.height=t.height,Wt.getContext("2d")):null}:function(){return null},Ht={};var Bt,It=decodeURIComponent;function Pt(t,e,i){var n=t.aspectRatio,o=t.height,r=t.width,a=e,s=i;return i?a=r:e&&(s=o),"all"===i&&"all"===e&&(a=r,s=o),{width:a,height:s}}function zt(t,e){var i={};return t&&(h(e)&&g(e,function(e,n){p(t[n])&&(i[n]=t[n].apply(t,m(e)?e:[e]))})),i}var jt=Object.prototype.hasOwnProperty;function Ft(t,e){if(t.length!==e.length)return!1;for(var i=0;i<t.length;i+=1)if(t[i]!==e[i])return!1;return!0}function Ut(t){return c(t)?t.replace(/^(?:width|height|left|top|marginLeft|marginTop)$/,"get-$1-data"):t}var Xt={},qt={},Gt={};function Vt(t,e,i,n){return t.left+=(e-i)*(Math.abs(t.scaleX)||1),t.top+=(e-n)*(Math.abs(t.scaleY)||1),t.scaleX*=e,t.scaleY*=e,t}var Kt,Zt,Jt,Qt,$,tt,et,it,nt,ot,rt,at,st,ht,ct,lt,ut,dt,pt,ft,mt,gt,vt,bt,yt,wt,xt,Ct,Mt,kt,Dt,Yt,Ot,Tt,Et,Nt,At,Lt,Rt,Wt,St,Ht,Bt,It,Pt,zt,jt,Ft,Ut,Xt,qt,Gt,Vt,Kt=function(t,e){return parseInt(t,e||10)},Zt=s.ArrayBuffer,Jt=s.FileReader;var Qt=Zt&&Jt;if(Qt){var $t=new Jt;($t.readAsArrayBuffer(new s.Blob),Jt=$.constructor)}function te(t){var e,i=t.replace(/^data:.*,/,function(t){return e=t,t.slice(t.indexOf(":")+1,t.indexOf(";"))}),n=atob(i),o=new Zt(n.length),r=new Uint8Array(o);return v(r,function(t,e){r[e]=n.charCodeAt(e)}),{blob:new s.Blob([o],{type:e}),type:e,data:r}}function ee(t){var e,i=new DataView(t);if(255===i.getUint8(0)&&216===i.getUint8(1))for(var n=i.byteLength,o=2;o<n-1&&255===i.getUint8(o);)if(225===i.getUint8(o+1)){e=o;break}return e&&i.getUint16(e+4,void 0)===('0x'+function(t){for(var e=[],i=0;i<t.length;i+=2)e.push(parseInt(t.slice(i,i+2),16));return String.fromCharCode.apply(String,e)}("45786966"))?function(t,e){var i,n=-1,o=t.getUint16(e,void 0)===('0x'+function(t){for(var e=[],i=0;i<t.length;i+=2)e.push(parseInt(t.slice(i,i+2),16));return String.fromCharCode.apply(String,e)}("4949"));for(var r=e+t.getUint32(e+4,o),a=t.getUint16(r,o),s=0;s<a;s+=1){var h=r+12*s+2;274===t.getUint16(h,o)&&(h+=8,i=t.getUint16(h,o),t.byteLength,n=i)}return n}(i,e+10):-1}var ie="undefined"!=typeof self?self:"undefined"!=typeof window?window:{};function ne(t,e){return h(t)?g(t,function(i,n){ne(i,e.concat(n))}):e.push(t),e}var oe=function(){function t(e,i){var r=this;if(void 0===i&&(i={}),this.element=e,this.options=Object.assign({},n,h(i)&&i),this.state="ready",this.wheeling=!1,this.onWheeling=function(t){t.preventDefault();var e=r.wheeling;e||(r.wheeling=!0,setTimeout(function(){r.wheeling=!1},50));var i=Math.max(-1,Math.min(1,t.deltaY||t.wheelDelta||-t.detail)),n=-.1*i,o=r.imageData;n>0?n*o.width>o.naturalWidth||n*o.height>o.naturalHeight||(n=Math.min((o.naturalWidth-o.width)/o.width,(o.naturalHeight-o.height)/o.height)):n=Math.max((o.width-o.naturalWidth)/o.width,(o.height-o.naturalHeight)/o.height),r.zoom(n,t)},this.onDblClick=function(t){"disabled"!==r.state&&r.zoom(.1,t)},this.onMove=function(t){var e=r.options,i=r.pointers,n=t.pointerId,o=t.pageX,a=t.pageY;switch(i[n||0].endX=o,i[n||0].endY=a,r.action){case L:r.zoom(function(t){var e=Object.keys(t).map(function(e){return t[e]});if(e.length>1){var i=e[0],n=e[1],o=Math.sqrt(Math.pow(n.endX-i.endX,2)+Math.pow(n.endY-i.endY,2)),r=Math.sqrt(Math.pow(n.startX-i.startX,2)+Math.pow(n.startY-i.startY,2));return(o-r)/r}return(t[e[0]].endX-t[e[0]].startX)/r.imageData.width}(i),t);break;case A:r.move(i[0].endX-i[0].startX,i[0].endY-i[0].startY,t);break;default:!function(t){var n=t.cropBox,o=t.options,a=t.pointers[Object.keys(t.pointers)[0]],s=a.startX-n.minLeft,h=a.startY-n.minTop,c=a.endX-n.minLeft,l=a.endY-n.minTop,u=t.action;o.movable&&u===G?t.move(c-s,l-h,null):o.cropBoxResizable&&u&&(t.cropBox.width=n.width+c-s,t.cropBox.height=n.height+l-h,t.cropBox.left=n.left,t.cropBox.top=n.top,t.action=N,t.renderCropBox())}(r)}},this.onEnd=function(t){var e=r.action;delete r.action,e===N&&a(r.element,lt,{originalEvent:t,action:Ct})},this.onStart=function(t){var e=r.options,i=r.pointers,n=t.changedTouches,o=t.pointerId,s=t.pageX,h=t.pageY,c=wt.test(t.target.className);if("disabled"!==r.state&&!c&&e.cropBoxMovable){if(n)g(n,function(t){i[t.identifier]={pageX:t.pageX,pageY:t.pageY,startX:t.pageX,startY:t.pageY,endX:t.pageX,endY:t.pageY}});else{var l=0;o&&(l=o),i[l]={pageX:s,pageY:h,startX:s,startY:h,endX:s,endY:h}}var u=Object.keys(i).length;u>1?r.action=L:r.action=A,a(r.element,dt,{originalEvent:t,action:Ct})}},this.onCropMove=function(t){var e=r.cropBox,i=t.pageX-e.minLeft,n=t.pageY-e.minTop;r.cropBox.width=e.width+i-r.startX,r.cropBox.height=e.height+n-r.startY,r.cropBox.left=e.left,r.cropBox.top=e.top,r.startX=i,r.startY=n,r.renderCropBox(),a(r.element,ut,{originalEvent:t,action:Ct})},this.onCropEnd=function(t){var e=r.action;e===N&&a(r.element,lt,{originalEvent:t,action:Ct})},this.onCropStart=function(t){var e=r.cropBox;r.startX=t.pageX-e.minLeft,r.startY=t.pageY-e.minTop,r.action=N,a(r.element,dt,{originalEvent:t,action:Ct})},this.init()}return t.prototype.init=function(){var t=this.element,e=this.options;if(t[T])return this;t[T]=this;var i,n=t.tagName.toLowerCase();if("img"===n)i=t.cloneNode(),s.location.protocol;else if("canvas"===n&&s.HTMLCanvasElement)i=t.toDataURL();else return;this.image=i,this.ready=!1,this.cropped=!1,this.cropBox=null,this.canvas=null,this.previews=null,this.load()},t.prototype.load=function(){var t,e=this,i=this.options,n=this.image,o=s.location.protocol;n.src&&k(n.src)&&(o=n.src.substring(0,n.src.indexOf(":"))),Qt&&Y(n.src)&&(t=te(n.src).blob,n.src=s.URL.createObjectURL(t)),n.onload=function(){"disabled"!==e.state&&(e.naturalWidth=n.naturalWidth||n.width,e.naturalHeight=n.naturalHeight||n.height,e.aspectRatio=e.naturalWidth/e.naturalHeight,e.loaded=!0,e.build())},n.onerror=function(){n.onload=null,n.onerror=null,e.loaded=!1,e.state="error",a(e.element,mt)},i.checkCrossOrigin&&function(t,e,i){var n,o="anonymous",r=s.location,a=r.hostname===t.hostname&&r.port===t.port&&r.protocol===t.protocol;a||(n=t.protocol,"http:"!==n&&"https:"!==n||(o="use-credentials")),e.crossOrigin=o,e.src=i||t.href}({hostname:n.src.split("/")[2],protocol:o+":"},n)},t.prototype.build=function(){var t,e,i,n,o,r,s,h=this;h.loaded&&"destroyed"!==h.state&&(h.container=function(t){var e={};return g(window.getComputedStyle(t),function(t,i){var n=t.getPropertyValue(i),o=n.match(/(\d+)px/);o&&(e[i.replace(/-\w/g,function(t){return t.slice(1).toUpperCase()})]=Number(o[1]))}),e}(h.element.parentNode),h.cropper=function(t){var e=t.element,i=t.options,n=y.createElement("div");return n.setAttribute("class",K),i.modal&&n.insertAdjacentHTML("beforeEnd",'<div class="'+$+'"></div>'),i.guides||n.insertAdjacentHTML("beforeEnd",'<div class="'+Q+'"><span class="cropper-dashed dashed-h"></span><span class="cropper-dashed dashed-v"></span><span class="cropper-center"></span><span class="cropper-view-box"></span><span class="cropper-face"></span><span class="cropper-line line-e" data-cropper-action="e"></span><span class="cropper-line line-n" data-cropper-action="n"></span><span class="cropper-line line-w" data-cropper-action="w"></span><span class="cropper-line line-s" data-cropper-action="s"></span><span class="cropper-point point-e" data-cropper-action="e"></span><span class="cropper-point point-n" data-cropper-action="n"></span><span class="cropper-point point-w" data-cropper-action="w"></span><span class="cropper-point point-s" data-cropper-action="s"></span><span class="cropper-point point-ne" data-cropper-action="ne"></span><span class="cropper-point point-nw" data-cropper-action="nw"></span><span class="cropper-point point-sw" data-cropper-action="sw"></span><span class="cropper-point point-se" data-cropper-action="se"></span></div>'),n.insertAdjacentHTML("beforeEnd",'<div class="'+J+'"></div>'),n.insertAdjacentHTML("beforeEnd",'<div class="'+Z+'"></div>'),i.background&&n.classList.add(at),e.classList.contains(et)&&n.classList.add(et),n}(h),t=h.image,e=h.element,i=h.options,h.canvas={left:0,top:0,width:0,height:0,naturalWidth:h.naturalWidth,naturalHeight:h.naturalHeight,aspectRatio:h.aspectRatio,rotate:0,scaleX:1,scaleY:1},h.cropBox={left:0,top:0,width:0,height:0,minLeft:0,minTop:0,minWidth:0,minHeight:0,maxWidth:1/0,maxHeight:1/0},h.previews=function(t,e){var i=[];return g(y.querySelectorAll(t),function(t){var n=y.createElement("img");e.appendChild(n),i.push({width:t.offsetWidth,height:t.offsetHeight,element:t,image:n})}),i}(i.preview,h.cropper),h.render(),n=h.cropper,o=h.element,r=h.options,(s={crop:h.onCropStart,end:h.onCropEnd,move:h.onCropMove,start:h.onCropStart}).end=h.onCropEnd,s.move=h.onCropMove,s.start=h.onCropStart,g(s,function(t,e){var i,a,s;i=n,a=e,s=t,i.addEventListener(a,s)}),r.zoomable&&r.zoomOnWheel&&n.addEventListener("wheel",h.onWheeling),r.toggleDragModeOnDblclick&&n.addEventListener("dblclick",h.onDblClick),o.addEventListener(ft,h),o.addEventListener(mt,h),y.addEventListener("keydown",h),y.addEventListener(vt,h),g({end:h.onEnd,move:h.onMove,start:h.onStart},function(t,e){var i,a,s;i=n,a=e,s=t,i.addEventListener(a,s)}),h.ready=!0,a(h.element,gt),h.setDragMode(i.dragMode))},t.prototype.destroy=function(){var t=this;if("destroyed"!==t.state){var e=t.element;return e.removeEventListener(ft,t),e.removeEventListener(mt,t),y.removeEventListener(vt,t),y.removeEventListener("keydown",t),t.cropper.parentNode.removeChild(t.cropper),delete e[T],t.state="destroyed",t}},t.prototype.reset=function(){return this.cropped=!1,this.renderCanvas(),this.renderCropBox(),this},t.prototype.clear=function(){return this.cropped=!1,this.cropBox.width=0,this.cropBox.height=0,this.renderCropBox(),this},t.prototype.replace=function(t,e){var i=this;if(t&&t!==this.url&&!this.isImg){var n=new Image;n.src=t,i.load(n,e)}return i},t.prototype.enable=function(){return this.state="ready",this.cropper.classList.remove(rt),this},t.prototype.disable=function(){return this.state="disabled",this.cropper.classList.add(rt),this},t.prototype.move=function(t,e){var i=this.canvas;return this.canvas.left+=t,this.canvas.top+=e,this.renderCanvas(!0),this},t.prototype.moveTo=function(t,e){var i=this.canvas;return void 0===e&&(e=t),this.canvas.left=t,this.canvas.top=e,this.renderCanvas(!0),this},t.prototype.zoom=function(t,e){var i,n,o,r=this.canvas,a=t;return a=Number(a),a<0?a=1/(1-a):a>0&&(a=1+a),i=r.width*a,n=r.height*a,o={x:(e.pageX-r.left)/r.width,y:(e.pageY-r.top)/r.height},r.left-=(i-r.width)*o.x,r.top-=(n-r.height)*o.y,r.width=i,r.height=n,this.renderCanvas(!0),this},t.prototype.zoomTo=function(t,e){var i,n,o,r=this.canvas;return t=Math.max(0,t),i=r.width,n=r.height,o=r.naturalWidth,r.width=o*t,r.height=r.naturalHeight*t,r.left-=(r.width-i)/2,r.top-=(r.height-n)/2,this.renderCanvas(!0),this},t.prototype.rotate=function(t){var e=this.canvas,i=this.image,n=e.rotate||0;return n+=Number(t),e.rotate=n,Math.abs(n)>90&&(i.width=Math.abs(e.height),i.height=Math.abs(e.width)),this.renderCanvas(!0),this},t.prototype.rotateTo=function(t){var e=this.canvas;return e.rotate=Number(t),this.renderCanvas(!0),this},t.prototype.scale=function(t,e){var i=this.canvas;return void 0===e&&(e=t),i.scaleX*=t,i.scaleY*=e,this.renderCanvas(!0),this},t.prototype.scaleX=function(t){var e=this.canvas;return e.scaleX*=t,this.renderCanvas(!0),this},t.prototype.scaleY=function(t){var e=this.canvas;return e.scaleY*=t,this.renderCanvas(!0),this},t.prototype.getData=function(t){var e,i,n=this.cropBox,o=this.canvas;return this.ready&&this.cropped?(i={x:n.left-o.left,y:n.top-o.top,width:n.width,height:n.height,rotate:o.rotate,scaleX:o.scaleX,scaleY:o.scaleY},e=this.image,t&&g(i,function(t,i){var n=e.naturalWidth/e.width;i.x*=n,i.y*=n,i.width*=n,i.height*=n})):i={x:0,y:0,width:0,height:0,rotate:0,scaleX:1,scaleY:1},i},t.prototype.setData=function(t){var e=this,i=e.options,n=e.canvas,o={},r=t.rotate,a=t.scaleX,s=t.scaleY;return e.ready&&"undefined"==typeof t||(p(i.setData)&&(t=i.setData.call(e.element,t)),e.cropped=!0,c(r)&&(n.rotate=r),c(a)&&(n.scaleX=a),c(s)&&(n.scaleY=s),e.renderCanvas(),h(t)&&(o.width=t.width,o.height=t.height,o.left=t.x+n.left,o.top=t.y+n.top,g(o,function(t,i){e.cropBox[i]=t}),e.renderCropBox())),e},t.prototype.getCropBoxData=function(){var t,e=this.cropBox;return this.ready&&this.cropped?t={left:e.left,top:e.top,width:e.width,height:e.height}:t?t.left=0:t={left:0,top:0,width:0,height:0},t},t.prototype.setCropBoxData=function(t){var e,i=this.cropBox,n=this.options.aspectRatio;return this.ready&&this.cropped&&(e=t.height,i.width=t.width||i.width,i.height=e||(n?i.width/n:i.height),i.left=t.left||i.left,i.top=t.top||i.top,this.renderCropBox()),this},t.prototype.getCanvasData=function(){var t,e=this.canvas;return this.ready?t={left:e.left,top:e.top,width:e.width,height:e.height,naturalWidth:e.naturalWidth,naturalHeight:e.naturalHeight}:t?t.left=0:t={left:0,top:0,width:0,height:0,naturalWidth:0,naturalHeight:0},t},t.prototype.setCanvasData=function(t){var e=this.canvas,i=t.aspectRatio;return this.ready&&(c(t.left)&&(e.left=t.left),c(t.top)&&(e.top=t.top),c(t.width)&&(e.width=t.width,e.height=t.width/e.aspectRatio),c(t.height)&&(e.height=t.height,e.width=t.height*e.aspectRatio),c(i)&&(e.aspectRatio=i),this.renderCanvas()),this},t.prototype.getImageData=function(){var t,e=this.image;return this.ready&&(t={naturalWidth:e.naturalWidth,naturalHeight:e.naturalHeight,aspectRatio:e.width/e.height,width:e.width,height:e.height,left:parseInt(e.style.left),top:parseInt(e.style.top),rotate:this.canvas.rotate,scaleX:this.canvas.scaleX,scaleY:this.canvas.scaleY}):t?t.width=0:t={naturalWidth:0,naturalHeight:0,aspectRatio:0,width:0,height:0,left:0,top:0,rotate:0,scaleX:1,scaleY:1},t},t.prototype.getContainerData=function(){return this.ready?this.container:{}},t.prototype.setDragMode=function(t){var e=this.options,i=this.dragBox,n=this.face;if(this.ready&&"disabled"!==this.state){var o=t===G,r=e.movable&&t===q;i.style.cursor=r?q:o?ot:V,n.style.cursor=r?q:o?ot:V}},t.prototype.getRoundedCanvasData=function(t){var e=this.getData(),i=e.width,n=e.height,o=document.createElement("canvas"),r=o.getContext("2d");o.width=i,o.height=n,r.imageSmoothingEnabled=!0,r.imageSmoothingQuality="high",r.strokeStyle="rgba(0,0,0,0.5)",r.lineWidth=1,r.fillStyle="rgba(0,0,0,0.3)",r.fillRect(0,0,i,n);var a,s=this.image,h=e.x,c=e.y;a={naturalWidth:s.naturalWidth,naturalHeight:s.naturalHeight,aspectRatio:s.naturalWidth/s.naturalHeight,width:i,height:n,left:h,top:c,rotate:e.rotate,scaleX:e.scaleX,scaleY:e.scaleY};var l,u,d,p,f,m,v=a.naturalWidth,y=a.naturalHeight,w=a.left,x=a.top,C=a.width,M=a.height,k=a.rotate,D=a.scaleX,Y=a.scaleY;return M&&(u=M,l=C||u*a.aspectRatio),C&&(l=C,u=M||l/a.aspectRatio),r.translate(l/2,u/2),k&&r.rotate(k*Math.PI/180),D&&Y&&r.scale(D,Y),r.drawImage(s,-l/2,-u/2,l,u),o},t.setDefaults=function(t){n=Object.assign({},n,h(t)&&t)},t}();function n(t,e){return t.classList?t.classList.add(e):t.className.indexOf(e)<0&&(t.className+=" "+e)}oe.prototype.preview=function(){var t=this,e=t.image,i=t.canvas,n=t.cropBox,o=n.width,r=n.height,s=e.style,h=s.width,c=s.height,l=s.transform;g(t.previews,function(t){var e=t.element,s=t.width,h=t.height,c=t.image,l=o,u=r,d=1;o>s&&(d=s/o),r>h&&(d=Math.min(s/o,h/r)),l=o*d,u=r*d;var p={width:i.width,height:i.height,transform:i.transform};c.style.cssText="width: "+p.width*d+"px; height: "+p.height*d+"px; transform: "+function(t){var e=t.translateX,i=t.translateY,n=t.rotate,o=t.scaleX,r=t.scaleY,a=[];e&&a.push("translateX("+e+"px)"),i&&a.push("translateY("+i+"px)"),n&&a.push("rotate("+n+"deg)"),o&&r&&a.push("scale("+o+","+r+")");return a.length?a.join(" "):"none"}({translateX:(-n.left-p.left)*d,translateY:(-n.top-p.top)*d,rotate:p.rotate,scaleX:p.scaleX,scaleY:p.scaleY})})},oe;var n={viewMode:0,dragMode:"crop",aspectRatio:NaN,data:null,preview:"",responsive:!0,restore:!0,checkCrossOrigin:!0,checkOrientation:!0,modal:!0,guides:!0,center:!0,highlight:!0,background:!0,autoCrop:!0,autoCropArea:.8,movable:!0,rotatable:!0,scalable:!0,zoomable:!0,zoomOnTouch:!0,zoomOnWheel:!0,wheelZoomRatio:.1,cropBoxMovable:!0,cropBoxResizable:!0,toggleDragModeOnDblclick:!0,minCanvasWidth:0,minCanvasHeight:0,minCropBoxWidth:0,minCropBoxHeight:0,minContainerWidth:200,minContainerHeight:100,ready:null,cropstart:null,cropmove:null,cropend:null,crop:null,zoom:null}});
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const printButton = document.getElementById('printButton');
+            const cropModal = document.getElementById('crop-modal');
+            const imageToCrop = document.getElementById('image-to-crop');
+            const cropButton = document.getElementById('crop-button');
+            const cancelButton = document.getElementById('cancel-button');
+
+            let cropper;
+
+            function showModalWithCropper(file, targetIds) {
+                // Pəncərə açıldıqda hədəf elementlərin ID-lərini "yadda saxlayır"
+                cropModal.dataset.targetInput = targetIds.input;
+                cropModal.dataset.targetPreview = targetIds.preview;
+                cropModal.dataset.targetControlBlock = targetIds.controlBlock;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imageToCrop.src = e.target.result;
+
+                    // Şəklin tam yüklənməsini gözləyirik (ən etibarlı üsul)
+                    imageToCrop.onload = () => {
+                        if (cropper) cropper.destroy();
+                        
+                        cropModal.classList.remove('hidden');
+                        
+                        // Kəsmə alətini aktivləşdiririk
+                        cropper = new Cropper(imageToCrop, {
+                            aspectRatio: NaN, // Sərbəst kəsim
+                            viewMode: 1,      // Kəsim sahəsi şəkildən kənara çıxmasın
+                        });
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function hideModal() {
+                cropModal.classList.add('hidden');
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+                const inputId = cropModal.dataset.targetInput;
+                if (inputId) {
+                    document.getElementById(inputId).value = '';
+                }
+            }
+
+            function setupImageUploader(inputId, previewId, fileNameId, controlBlockId, sliderId, sizeValueId) {
+                const input = document.getElementById(inputId);
+                const slider = document.getElementById(sliderId);
+                const sizeValue = document.getElementById(sizeValueId);
+
+                input.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        document.getElementById(fileNameId).textContent = file.name;
+                        showModalWithCropper(file, {
+                            input: inputId,
+                            preview: previewId,
+                            controlBlock: controlBlockId
+                        });
+                    }
+                });
+
+                slider.addEventListener('input', (event) => {
+                    const previewEl = document.getElementById(previewId);
+                    const newSize = event.target.value;
+                    previewEl.style.width = `${newSize}%`;
+                    sizeValue.textContent = `${newSize}%`;
+                });
+            }
+
+            cropButton.addEventListener('click', () => {
+                if (!cropper) return;
+
+                const previewId = cropModal.dataset.targetPreview;
+                const controlBlockId = cropModal.dataset.targetControlBlock;
+
+                if (!previewId || !controlBlockId) return;
+
+                const targetPreview = document.getElementById(previewId);
+                const targetControlBlock = document.getElementById(controlBlockId);
+                
+                const canvas = cropper.getCroppedCanvas({
+                    maxWidth: 4096,
+                    maxHeight: 4096,
+                    imageSmoothingQuality: 'high',
+                });
+
+                targetPreview.src = canvas.toDataURL('image/jpeg');
+                targetControlBlock.classList.remove('hidden');
+                hideModal();
+            });
+
+            cancelButton.addEventListener('click', hideModal);
+
+            setupImageUploader('imageInput1', 'imagePreview1', 'fileName1', 'imageControlBlock1', 'sizeSlider1', 'sizeValue1');
+            setupImageUploader('imageInput2', 'imagePreview2', 'fileName2', 'imageControlBlock2', 'sizeSlider2', 'sizeValue2');
+
+            printButton.addEventListener('click', () => {
+                window.print();
+            });
+        });
+    </script>
+
+</body>
+</html>
