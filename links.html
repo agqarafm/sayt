@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mənim Linklərim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --primary-color: #16213e;
+            --secondary-color: #0f3460;
+            --accent-color: #e94560;
+            --font-color: #e0e0e0;
+            --card-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, var(--bg-color), var(--secondary-color));
+            color: var(--font-color);
+            perspective: 1000px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Login Ekranı --- */
+        #login-container {
+            background: var(--card-color);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: fadeIn 0.7s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        #login-container h1 {
+            margin-bottom: 25px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        #login-container .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        #login-container .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+        }
+
+        #password-input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            color: var(--font-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #password-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+        }
+
+        #login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #login-button:hover {
+            background-color: #ff5c7a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        #error-message {
+            color: var(--accent-color);
+            margin-top: 15px;
+            height: 20px;
+            font-weight: 500;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #error-message.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* --- Ana Proqram Ekranı --- */
+        #app-container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--card-color);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: rotateY(180deg);
+            animation: flipIn 0.8s forwards;
+        }
+
+        #app-container h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .form-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #link-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: var(--font-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        #link-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        #add-link-btn {
+            padding: 10px 15px;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #add-link-btn:hover {
+            background-color: #ff5c7a;
+            transform: scale(1.1);
+        }
+
+        #link-list {
+            list-style: none;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        /* Link list scrollbar stili */
+        #link-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        #link-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #link-list::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            animation: slideIn 0.5s forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .link-item:nth-child(odd) {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .link-item .icon {
+            font-size: 20px;
+            color: var(--accent-color);
+            margin-right: 15px;
+        }
+
+        .link-item a {
+            color: var(--font-color);
+            text-decoration: none;
+            word-break: break-all;
+            flex-grow: 1;
+            transition: color 0.3s ease;
+        }
+
+        .link-item a:hover {
+            color: var(--accent-color);
+        }
+
+        .link-item .delete-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .link-item .delete-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        /* Animasiyalar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.9); }
+        }
+
+        @keyframes flipIn {
+            from { transform: rotateY(180deg); }
+            to { transform: rotateY(0deg); }
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="login-container">
+        <h1><i class="fas fa-lock" style="margin-right: 10px;"></i>Təhlükəsiz Giriş</h1>
+        <div class="input-group">
+            <i class="fas fa-key"></i>
+            <input type="password" id="password-input" placeholder="Şifrəni daxil edin">
+        </div>
+        <button id="login-button">Daxil Ol</button>
+        <p id="error-message">Yanlış şifrə!</p>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <h1><i class="fas fa-link" style="margin-right: 10px;"></i>Link Bələdçisi</h1>
+        <div class="form-container">
+            <input type="text" id="link-input" placeholder="URL və ya lokal fayl yolu əlavə edin...">
+            <button id="add-link-btn" title="Əlavə et"><i class="fas fa-plus"></i></button>
+        </div>
+        <ul id="link-list">
+            </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elementlərin seçilməsi
+            const loginContainer = document.getElementById('login-container');
+            const appContainer = document.getElementById('app-container');
+            const passwordInput = document.getElementById('password-input');
+            const loginButton = document.getElementById('login-button');
+            const errorMessage = document.getElementById('error-message');
+
+            const linkInput = document.getElementById('link-input');
+            const addLinkBtn = document.getElementById('add-link-btn');
+            const linkList = document.getElementById('link-list');
+            
+            // Düzgün şifrənin hash-ı (orijinal: "223366"). Bu, şifrənin kodda birbaşa görünməməsi üçün sadə bir üsuldur.
+            const correctPassHash = "1df4219410977afe7309a4635835235559a45b634a1b55a8a1e3b62dd55502a3"; // SHA-256
+
+            // Şifrə yoxlama funksiyası
+            async function sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            const handleLogin = async () => {
+                const enteredPassword = passwordInput.value;
+                const enteredPassHash = await sha256(enteredPassword);
+
+                if (enteredPassHash === correctPassHash) {
+                    loginContainer.style.animation = 'fadeOut 0.5s forwards';
+                    setTimeout(() => {
+                        loginContainer.classList.add('hidden');
+                        appContainer.classList.remove('hidden');
+                        loadLinks(); // Linkləri yaddaşdan yüklə
+                    }, 500);
+                } else {
+                    errorMessage.classList.add('visible');
+                    loginContainer.style.animation = 'shake 0.4s';
+                    setTimeout(() => {
+                        loginContainer.style.animation = '';
+                        errorMessage.classList.remove('visible');
+                    }, 2000);
+                }
+            };
+            
+            loginButton.addEventListener('click', handleLogin);
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+
+
+            // Linklərin idarə olunması
+            let links = JSON.parse(localStorage.getItem('savedLinks')) || [];
+
+            // Linkləri yaddaşdan yükləyib göstərmək
+            const loadLinks = () => {
+                linkList.innerHTML = '';
+                links.forEach((link, index) => {
+                    createLinkElement(link, index);
+                });
+            };
+
+            // Linki yaddaşda saxlamaq
+            const saveLinks = () => {
+                localStorage.setItem('savedLinks', JSON.stringify(links));
+            };
+            
+            // Link üçün HTML element yaratmaq
+            const createLinkElement = (link, index) => {
+                const li = document.createElement('li');
+                li.className = 'link-item';
+                li.dataset.index = index;
+                
+                // Linkin növünü təyin et (fayl yoxsa veb)
+                let iconClass = 'fas fa-globe'; // Default olaraq veb
+                if (link.startsWith('file:') || link.match(/^[a-zA-Z]:\\/)) {
+                    iconClass = 'fas fa-folder-open'; // Lokal fayl
+                }
+
+                li.innerHTML = `
+                    <i class="icon ${iconClass}"></i>
+                    <a href="${link}" target="_blank" title="${link}">${link}</a>
+                    <button class="delete-btn" title="Sil"><i class="fas fa-trash-alt"></i></button>
+                `;
+                
+                // Animasiya üçün kiçik gecikmə
+                li.style.animationDelay = `${index * 0.1}s`;
+
+                linkList.appendChild(li);
+            };
+
+            // Link əlavə etmək
+            addLinkBtn.addEventListener('click', () => {
+                const linkValue = linkInput.value.trim();
+                if (linkValue) {
+                    links.push(linkValue);
+                    saveLinks();
+                    linkList.innerHTML = ''; // Siyahını təmizlə
+                    loadLinks(); // Yenidən yüklə
+                    linkInput.value = '';
+                    linkInput.focus();
+                }
+            });
+            
+            linkInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addLinkBtn.click();
+                }
+            });
+            
+            // Link silmək
+            linkList.addEventListener('click', (e) => {
+                if (e.target.closest('.delete-btn')) {
+                    const li = e.target.closest('.link-item');
+                    const index = parseInt(li.dataset.index, 10);
+                    links.splice(index, 1); // Array-dən sil
+                    saveLinks(); // Yaddaşı yenilə
+                    loadLinks(); // Siyahını yenilə
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>
