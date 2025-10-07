@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredit İdarəetmə Sistemi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-cash-register"></i> Kredit Sistemi</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-target="yeni-kredit-sehifesi"><a href="#"><i class="fas fa-plus-circle"></i> Yeni Kredit</a></li>
+                <li class="nav-item" data-target="musteri-bazasi-sehifesi"><a href="#"><i class="fas fa-users"></i> Müştəri Bazası</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <section id="yeni-kredit-sehifesi" class="page active">
+                <h1><i class="fas fa-file-invoice-dollar"></i> Yeni Kredit Müraciəti</h1>
+                <form id="kreditFormu">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ad"><i class="fas fa-user"></i> Ad</label>
+                            <input type="text" id="ad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="soyad"><i class="fas fa-user-friends"></i> Soyad</label>
+                            <input type="text" id="soyad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ataAdi"><i class="fas fa-user-tie"></i> Ata Adı</label>
+                            <input type="text" id="ataAdi" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="finKod"><i class="fas fa-id-card"></i> FİN Kod</label>
+                            <input type="text" id="finKod" required maxlength="7">
+                        </div>
+                        <div class="form-group">
+                            <label for="vesiqeSeria"><i class="fas fa-id-card-alt"></i> Vəsiqə Seriyası</label>
+                            <select id="vesiqeSeria">
+                                <option value="AZE">AZE</option>
+                                <option value="AA">AA</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="form-row">
+                        <div class="form-group">
+                            <label for="mobil1"><i class="fas fa-mobile-alt"></i> Əsas Mobil Nömrə</label>
+                            <input type="tel" id="mobil1" placeholder="050-123-45-67" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil2"><i class="fas fa-phone"></i> Əlavə Nömrə 1</label>
+                            <input type="tel" id="mobil2">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil3"><i class="fas fa-phone"></i> Əlavə Nömrə 2</label>
+                            <input type="tel" id="mobil3">
+                        </div>
+                         <div class="form-group">
+                            <label for="mobil4"><i class="fas fa-phone"></i> Əlavə Nömrə 3</label>
+                            <input type="tel" id="mobil4">
+                        </div>
+                    </div>
+                    <hr>
+                     <div class="form-row">
+                        <div class="form-group">
+                            <label for="mehsulAdi"><i class="fas fa-box"></i> Məhsulun Adı</label>
+                            <input type="text" id="mehsulAdi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mehsulKateqoriya"><i class="fas fa-tags"></i> Kateqoriya</label>
+                            <input type="text" id="mehsulKateqoriya" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nagdQiymet"><i class="fas fa-money-bill-wave"></i> Nağd Qiyməti (AZN)</label>
+                            <input type="number" id="nagdQiymet" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="kreditQiymeti"><i class="fas fa-credit-card"></i> Kredit Qiyməti (AZN)</label>
+                            <input type="number" id="kreditQiymeti" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ilkinOdenis"><i class="fas fa-hand-holding-usd"></i> İlkin Ödəniş (AZN)</label>
+                            <input type="number" id="ilkinOdenis" value="0">
+                        </div>
+                         <div class="form-group">
+                            <label for="kreditMuddeti"><i class="fas fa-calendar-alt"></i> Kredit Müddəti (Ay)</label>
+                             <select id="kreditMuddeti">
+                                <option value="3">3 Ay</option>
+                                <option value="6">6 Ay</option>
+                                <option value="9">9 Ay</option>
+                                <option value="12" selected>12 Ay</option>
+                                <option value="18">18 Ay</option>
+                                <option value="24">24 Ay</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn"><i class="fas fa-check-circle"></i> Krediti Rəsmiləşdir</button>
+                </form>
+            </section>
+
+            <section id="musteri-bazasi-sehifesi" class="page">
+                <h1><i class="fas fa-database"></i> Müştəri Bazası</h1>
+                <input type="text" id="searchBox" placeholder="Ada, soyada və ya FİN koda görə axtar...">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Ad Soyad Ata</th>
+                                <th>Məhsul</th>
+                                <th>Aylıq Ödəniş</th>
+                                <th>Qalıq Borc</th>
+                                <th>Qalıq Ay</th>
+                                <th>Növbəti Ödəniş</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="musteriCedveli">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="odenisModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeOdenisModal">&times;</span>
+            <h2><i class="fas fa-wallet"></i> Ödəniş Et</h2>
+            <form id="odenisFormu">
+                <p><strong>Müştəri:</strong> <span id="modalMusteriAdi"></span></p>
+                <p><strong>Aylıq Ödəniş:</strong> <span id="modalAyliqOdenis"></span> AZN</p>
+                <input type="hidden" id="modalMusteriId">
+                <div class="form-group">
+                     <label for="odenisUsulu">Ödəniş Üsulu</label>
+                     <select id="odenisUsulu">
+                         <option value="Nağd">Nağd</option>
+                         <option value="Kart">Kart ilə</option>
+                     </select>
+                </div>
+                <button type="submit" class="submit-btn"><i class="fas fa-dollar-sign"></i> Ödənişi Təsdiqlə</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="cekModal" class="modal">
+        <div class="modal-content" id="cekContent">
+             <span class="close-btn" id="closeCekModal">&times;</span>
+             <div id="cekBody">
+                 <h2>ÖDƏNİŞ QƏBZİ</h2>
+                 <p><strong>Tarix:</strong> <span id="cekTarix"></span></p>
+                 <hr>
+                 <p><strong>Müştəri:</strong> <span id="cekMusteriAdi"></span></p>
+                 <p><strong>Ödənilən Məbləğ:</strong> <span id="cekOdenenMebleg"></span> AZN</p>
+                 <p><strong>Ödəniş Üsulu:</strong> <span id="cekOdenisUsulu"></span></p>
+                 <hr>
+                 <p><strong>Qalıq Borc:</strong> <span id="cekQaliqBorc"></span> AZN</p>
+                 <p><strong>Qalıq Aylar:</strong> <span id="cekQaliqAylar"></span></p>
+             </div>
+            <button id="printCekBtn" class="submit-btn"><i class="fas fa-print"></i> Çap Et</button>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
