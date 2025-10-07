@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müasir Şifrə Saxlayıcı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #6d80fe, #24c4d8, #a9ff78);
+            background-size: 300% 300%;
+            animation: color 12s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes color {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 420px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px 40px;
+            color: #fff;
+            transform: scale(0);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { transform: scale(1); }
+        }
+
+        .container h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            font-size: 16px;
+            color: #fff;
+            padding: 0 45px 0 20px;
+        }
+
+        .input-box input::placeholder {
+            color: #eee;
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 45px;
+            background: #fff;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .action-links {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .action-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.3s;
+        }
+        
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Modal Pəncərə Stili */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeInModal 0.3s;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 15% auto;
+            width: 80%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px 40px;
+            color: #fff;
+            animation: slideIn 0.4s;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        #credentialsList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        #credentialsList li {
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        #credentialsList li span {
+            word-break: break-all;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-form">
+        <form>
+            <h1><i class="fas fa-shield-halved"></i> Şifrə Saxlayıcı</h1>
+            <div class="input-box">
+                <input type="text" placeholder="İstifadəçi Adı və ya Email" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Şifrə" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Vebsayt (məsələn, google.com)" required>
+                <i class="fas fa-globe"></i>
+            </div>
+
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Yadda Saxla</button>
+            
+            <div class="action-links">
+                <p><a href="#" id="view-saved-btn">Saxlanılanlara Baxış <i class="fas fa-arrow-right"></i></a></p>
+            </div>
+        </form>
+    </div>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h2>Giriş Parolu</h2>
+            <p>Saxlanılan şifrələrə baxmaq üçün ana parolu daxil edin.</p>
+            <div class="input-box">
+                <input type="password" placeholder="Ana Parol" id="master-password-input" required>
+                <i class="fas fa-key"></i>
+            </div>
+            <button class="btn" id="submit-master-password">Təsdiq Et</button>
+        </div>
+    </div>
+    
+    <div id="credentials-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-credentials-modal">&times;</span>
+            <h2><i class="fas fa-list-ul"></i> Saxlanılan Məlumatlar</h2>
+            <ul id="credentialsList">
+                <li>
+                    <span><i class="fab fa-google"></i> <strong>Google.com</strong></span>
+                    <span>İstifadəçi: user@gmail.com</span>
+                    <span>Şifrə: ********</span>
+                </li>
+                <li>
+                    <span><i class="fab fa-facebook"></i> <strong>Facebook.com</strong></span>
+                    <span>İstifadəçi: my_facebook</span>
+                    <span>Şifrə: ********</span>
+                </li>
+                 <li>
+                    <span><i class="fab fa-github"></i> <strong>Github.com</strong></span>
+                    <span>İstifadəçi: developer_user</span>
+                    <span>Şifrə: ********</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        const viewSavedBtn = document.getElementById('view-saved-btn');
+        const passwordModal = document.getElementById('password-modal');
+        const credentialsModal = document.getElementById('credentials-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const closeCredentialsModalBtn = document.getElementById('close-credentials-modal');
+        const submitMasterPasswordBtn = document.getElementById('submit-master-password');
+        const masterPasswordInput = document.getElementById('master-password-input');
+
+        // Ana parol (real proqramda bu cür saxlanmamalıdır!)
+        const MASTER_PASSWORD = "12345"; 
+
+        viewSavedBtn.onclick = function(e) {
+            e.preventDefault();
+            passwordModal.style.display = "block";
+        }
+
+        closeModalBtn.onclick = function() {
+            passwordModal.style.display = "none";
+        }
+        
+        closeCredentialsModalBtn.onclick = function() {
+            credentialsModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == passwordModal) {
+                passwordModal.style.display = "none";
+            }
+            if (event.target == credentialsModal) {
+                credentialsModal.style.display = "none";
+            }
+        }
+
+        submitMasterPasswordBtn.onclick = function() {
+            if (masterPasswordInput.value === MASTER_PASSWORD) {
+                passwordModal.style.display = "none";
+                credentialsModal.style.display = "block";
+                masterPasswordInput.value = ""; // İnputu təmizlə
+            } else {
+                alert("Ana parol səhvdir!");
+                masterPasswordInput.style.border = "2px solid red";
+            }
+        }
+    </script>
+
+</body>
+</html>
