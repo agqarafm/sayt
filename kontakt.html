@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mənim Mağazam - Əsas Səhifə</title>
+    <style>
+        /* --- ÜMUMİ STİLLƏR --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- BAŞLIQ (HEADER) --- */
+        .header {
+            background-color: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e60000;
+        }
+        .search-bar {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+        .header-icons .icon {
+            font-size: 18px; /* Sadəlik üçün ikon əvəzinə mətn */
+        }
+
+        /* --- NAVİQASİYA MENYU --- */
+        .nav {
+            background-color: #333;
+            color: #fff;
+            padding: 15px 0;
+        }
+        .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+        .nav ul li {
+            cursor: pointer;
+        }
+
+        /* --- ƏSAS HİSSƏ (MAIN) --- */
+        .main-content {
+            padding: 20px 0;
+        }
+
+        /* --- SLAYDER BANNERİ --- */
+        .hero-banner {
+            background: linear-gradient(to right, #ff6b6b, #ffb36b);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .hero-banner h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        .hero-banner p {
+            font-size: 18px;
+        }
+
+        /* --- MƏHSUL BÖLMƏSİ --- */
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e60000;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .center-title {
+            text-align: center;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .product-image img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0 10px 0;
+        }
+        .product-price {
+            font-size: 20px;
+            color: #e60000;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .add-to-cart-btn {
+            background-color: #e60000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        /* --- ALT HİSSƏ (FOOTER) --- */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 30px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        .footer-column h3 {
+            font-size: 18px;
+            border-bottom: 1px solid #777;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">Mənim Mağazam</div>
+            <input type="text" class="search-bar" placeholder="Axtardığınız məhsulu yazın...">
+            <div class="header-icons">
+                <a href="#" class="icon">Müqayisə</a>
+                <a href="#" class="icon">Sevimlilər</a>
+                <a href="#" class="icon">Səbət</a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="#">Telefonlar</a></li>
+                <li><a href="#">Notbuklar</a></li>
+                <li><a href="#">Televizorlar</a></li>
+                <li><a href="#">Məişət Texnikası</a></li>
+                <li><a href="#">Kampaniyalar</a></li>
+                <li><a href="#">Haqqımızda</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content container">
+
+        <section class="hero-banner">
+            <h1>Möhtəşəm Endirimlər Başladı!</h1>
+            <p>Bütün məhsullara 50%-dək endirim fürsətini qaçırma!</p>
+        </section>
+
+        <section class="products-section">
+            <div class="center-title">
+                <h2 class="section-title">Populyar Məhsullar</h2>
+            </div>
+            <div class="product-grid">
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200x200.png?text=Smartfon" alt="Məhsul şəkli">
+                    </div>
+                    <h3 class="product-name">Smartfon Model X</h3>
+                    <p class="product-price">1299 AZN</p>
+                    <button class="add-to-cart-btn">Səbətə at</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200x200.png?text=Noutbuk" alt="Məhsul şəkli">
+                    </div>
+                    <h3 class="product-name">Noutbuk Pro 15</h3>
+                    <p class="product-price">2499 AZN</p>
+                    <button class="add-to-cart-btn">Səbətə at</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200x200.png?text=Qulaqlıq" alt="Məhsul şəkli">
+                    </div>
+                    <h3 class="product-name">Simsiz Qulaqlıq</h3>
+                    <p class="product-price">189 AZN</p>
+                    <button class="add-to-cart-btn">Səbətə at</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/200x200.png?text=Televizor" alt="Məhsul şəkli">
+                    </div>
+                    <h3 class="product-name">Smart TV 55"</h3>
+                    <p class="product-price">1899 AZN</p>
+                    <button class="add-to-cart-btn">Səbətə at</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Şirkət</h3>
+                    <ul>
+                        <li><a href="#">Haqqımızda</a></li>
+                        <li><a href="#">Mağazalar</a></li>
+                        <li><a href="#">Vakansiyalar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Müştərilər üçün</h3>
+                    <ul>
+                        <li><a href="#">Çatdırılma və Ödəniş</a></li>
+                        <li><a href="#">Zəmanət Şərtləri</a></li>
+                        <li><a href="#">Kredit Şərtləri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Əlaqə</h3>
+                    <ul>
+                        <li>Tel: *0101</li>
+                        <li>Email: info@menimmagazam.az</li>
+                        <li>Ünvan: Bakı şəhəri</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Mənim Mağazam. Bütün hüquqlar qorunur.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
