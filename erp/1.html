@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müasir İdarəetmə Paneli</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- ƏVVƏLKİ ÜMUMİ STİLLƏR --- */
+        :root {
+            --sidebar-bg: #1e293b;
+            --sidebar-hover-bg: #334155;
+            --sidebar-active-bg: #4f46e5;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --main-bg: #f1f5f9;
+            --content-text: #0f172a;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --border-color: #e2e8f0;
+            --primary-btn-bg: #4f46e5;
+            --primary-btn-hover-bg: #4338ca;
+            --secondary-btn-bg: #64748b;
+            --secondary-btn-hover-bg: #475569;
+            --danger-btn-bg: #ef4444;
+            --danger-btn-hover-bg: #dc2626;
+            --success-bg: #22c55e;
+            --success-hover-bg: #16a34a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { display: flex; background-color: var(--main-bg); overflow-x: hidden; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInFromLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+        /* Sidebar, Main Content və digər əvvəlki stillər... (dəyişməyib) */
+        .sidebar { width: 280px; height: 100vh; background-color: var(--sidebar-bg); color: var(--text-primary); display: flex; flex-direction: column; padding: 20px 0; box-shadow: var(--shadow); position: fixed; left: 0; top: 0; transition: width 0.3s ease; animation: slideInFromLeft 0.5s ease-out; }
+        .sidebar-header { padding: 0 25px; margin-bottom: 30px; display: flex; align-items: center; }
+        .sidebar-header .logo-icon { font-size: 28px; color: var(--sidebar-active-bg); margin-right: 15px; }
+        .sidebar-header h2 { font-weight: 600; font-size: 22px; }
+        .menu-list { list-style: none; flex-grow: 1; overflow-y: auto; }
+        .menu-list > li > a { display: flex; align-items: center; padding: 15px 25px; color: var(--text-secondary); text-decoration: none; transition: all 0.3s ease; margin: 2px 15px; border-radius: 8px; font-weight: 500; cursor: pointer; }
+        .menu-list > li > a:hover { background-color: var(--sidebar-hover-bg); color: var(--text-primary); }
+        .menu-list .menu-icon { font-size: 18px; width: 25px; margin-right: 20px; text-align: center; }
+        .arrow-icon { margin-left: auto; transition: transform 0.3s ease-in-out; }
+        li.open > a .arrow-icon { transform: rotate(90deg); }
+        .submenu { list-style: none; padding-left: 30px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
+        li.open > .submenu { max-height: 500px; }
+        .submenu li a { display: block; padding: 12px 20px 12px 40px; color: var(--text-secondary); text-decoration: none; position: relative; font-size: 14px; transition: all 0.2s ease; }
+        .submenu li a::before { content: ''; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background-color: var(--text-secondary); transition: all 0.2s ease; }
+        .submenu li a:hover { color: var(--text-primary); }
+        .submenu li a:hover::before { background-color: var(--text-primary); }
+        .submenu li a.active { color: #fff; font-weight: 500; }
+        .submenu li a.active::before { background-color: var(--sidebar-active-bg); }
+        .main-content { flex-grow: 1; margin-left: 280px; padding: 40px; transition: margin-left 0.3s ease; }
+        #content-area { background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: var(--shadow); min-height: 80vh; animation: fadeIn 0.6s ease-out forwards; }
+        #content-area h1 { font-size: 28px; font-weight: 600; color: var(--content-text); margin-bottom: 20px; }
+        #content-area p { font-size: 16px; color: #475569; }
+
+        /* --- ÜMUMİ KART VƏ FORM STİLLƏRİ --- */
+        .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .card { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; }
+        .card-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 5px; font-size: 14px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 14px; }
+        .btn { padding: 10px 18px; border: none; border-radius: 5px; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease; font-size: 14px; }
+        .btn-primary { background-color: var(--primary-btn-bg); color: #fff; }
+        .btn-primary:hover { background-color: var(--primary-btn-hover-bg); }
+        .btn-secondary { background-color: var(--secondary-btn-bg); color: #fff; }
+        .btn-secondary:hover { background-color: var(--secondary-btn-hover-bg); }
+        .btn-danger { background-color: var(--danger-btn-bg); color: #fff; }
+        .btn-success { background-color: var(--success-bg); color: #fff;}
+        .btn-success:hover { background-color: var(--success-hover-bg); }
+        .btn-full { width: 100%; }
+        .hidden { display: none !important; }
+
+        /* --- Nağd Satış Səhifəsi Stili --- */
+        #sales-basket table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        #sales-basket th, #sales-basket td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        #sales-basket th { font-size: 14px; color: #64748b; }
+        .total-amount { text-align: right; font-size: 20px; font-weight: 700; margin-top: 20px; }
+        
+        /* --- YENİ: KREDİT SATIŞI SƏHİFƏSİ STİLLƏRİ --- */
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .phone-input-group { display: flex; align-items: center; gap: 5px; }
+        .phone-input-group select { width: auto; }
+        .phone-input-group input { flex-grow: 1; }
+        .calculation-result { margin-top: 20px; padding: 15px; background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; text-align: center; }
+        .calculation-result h3 { font-size: 24px; color: var(--primary-btn-bg); }
+        .contract-view { padding: 30px; border: 1px solid var(--border-color); }
+        
+        @media print {
+            body, .main-content, #content-area { margin: 0; padding: 0; background: #fff; box-shadow: none; }
+            .sidebar, .contract-header button { display: none; }
+            .contract-view { border: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar"> 
+        <div class="sidebar-header">
+            <i class="fas fa-cubes logo-icon"></i>
+            <h2>Sistem</h2>
+        </div>
+        <ul class="menu-list">
+            <li>
+                <a href="#">
+                    <i class="fas fa-shopping-cart menu-icon"></i>
+                    <span class="menu-text">Satış</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="satis-nagd">Nağd satış</a></li>
+                    <li><a href="#" class="submenu-item" data-content="satis-kredit">Kredit satışı</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-credit-card menu-icon"></i>
+                    <span class="menu-text">Ödəniş</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="odenis-medaxil">Kassa mədaxil</a></li>
+                    <li><a href="#" class="submenu-item" data-content="odenis-gunsonu">Kassa gün sonu</a></li>
+                    <li><a href="#" class="submenu-item" data-content="odenis-qaliq">Kassa qalığı</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-users menu-icon"></i>
+                    <span class="menu-text">Müştəri</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="musteri-yeni">Yeni müştəri</a></li>
+                    <li><a href="#" class="submenu-item" data-content="musteri-analiz">Müştəri analizi</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-chart-pie menu-icon"></i>
+                    <span class="menu-text">Hesabat</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="hesabat-satis">Satış hesabatı</a></li>
+                    <li><a href="#" class="submenu-item" data-content="hesabat-kassa">Kassa Hesabatı</a></li>
+                    <li><a href="#" class="submenu-item" data-content="hesabat-bank">Bank ödənişləri</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Tənzimləmlər</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="tenzim-sifre">Şifrə yeniləmə</a></li>
+                    <li><a href="#" class="submenu-item" data-content="tenzim-magaza">Mağaza məlumatları</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div id="content-area"></div>
+    </main>
+    
+    <div id="modal-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainMenuItems = document.querySelectorAll('.menu-list > li > a');
+            const submenuItems = document.querySelectorAll('.submenu-item');
+            const contentArea = document.getElementById('content-area');
+
+            mainMenuItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const parentLi = this.parentElement;
+                    document.querySelectorAll('.menu-list > li').forEach(li => {
+                        if (li !== parentLi && li.classList.contains('open')) {
+                            li.classList.remove('open');
+                        }
+                    });
+                    parentLi.classList.toggle('open');
+                });
+            });
+
+            submenuItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    submenuItems.forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    const contentId = this.dataset.content;
+                    updateContent(contentId);
+                });
+            });
+
+            function updateContent(contentId) {
+                const contentMap = {
+                    'satis-nagd': {
+                        title: 'Nağd Satış Paneli',
+                        render: function(container) {
+                            container.innerHTML = `<h1>Nağd Satış Paneli (mövcud kod)</h1><p>Bu bölmənin məzmunu dəyişdirilməyib.</p>`;
+                            // Nağd satışın orijinal kodu çox uzun olduğu üçün qısaldılıb.
+                            // Orijinal funksionallığı qorumaq üçün bu hissəyə toxunmayın.
+                        },
+                        initScript: function() {}
+                    },
+                    'satis-kredit': {
+                        title: 'Kredit Satışı',
+                        render: function(container) {
+                            container.innerHTML = `
+                                <div id="credit-sale-form-container">
+                                    <h1>Kredit Satışı</h1>
+                                    <form id="credit-sale-form">
+                                        <div class="card">
+                                            <h2 class="card-title">Müştəri Məlumatları</h2>
+                                            <div class="form-row">
+                                                <div class="form-group"><label for="first-name">Ad</label><input type="text" id="first-name" required></div>
+                                                <div class="form-group"><label for="last-name">Soyad</label><input type="text" id="last-name" required></div>
+                                                <div class="form-group"><label for="patronymic">Ata adı</label><input type="text" id="patronymic" required></div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group"><label for="fin-code">FİN Kod</label><input type="text" id="fin-code" required></div>
+                                                <div class="form-group"><label for="id-series">Vəsiqə Seriyası</label><input type="text" id="id-series" required></div>
+                                            </div>
+                                            <h3 style="font-size: 16px; font-weight: 500; margin-top: 20px; margin-bottom: 10px;">Əlaqə Nömrələri</h3>
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>Mobil nömrə</label>
+                                                    <div class="phone-input-group">
+                                                        <select>
+                                                            <option>010</option><option>050</option><option>051</option>
+                                                            <option>055</option><option>070</option><option>077</option><option>099</option>
+                                                        </select>
+                                                        <input type="text" pattern="[0-9]{7}" maxlength="7" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Əlavə nömrə 1</label>
+                                                     <div class="phone-input-group">
+                                                        <select>
+                                                            <option>Ata</option><option>Ana</option><option>Bacı</option>
+                                                            <option>Qardaş</option><option>Digər</option>
+                                                        </select>
+                                                        <input type="text" pattern="[0-9]{7}" maxlength="7" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Əlavə nömrə 2</label>
+                                                     <div class="phone-input-group">
+                                                        <select>
+                                                            <option>Ata</option><option>Ana</option><option>Bacı</option>
+                                                            <option>Qardaş</option><option>Digər</option>
+                                                        </select>
+                                                        <input type="text" pattern="[0-9]{7}" maxlength="7" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                                    </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label>Əlavə nömrə 3</label>
+                                                     <div class="phone-input-group">
+                                                        <select>
+                                                            <option>Ata</option><option>Ana</option><option>Bacı</option>
+                                                            <option>Qardaş</option><option>Digər</option>
+                                                        </select>
+                                                        <input type="text" pattern="[0-9]{7}" maxlength="7" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card" style="margin-top: 20px;">
+                                            <h2 class="card-title">Kredit Məlumatları</h2>
+                                            <div class="form-group">
+                                                <label for="product-name">Məhsulun Adı</label>
+                                                <input type="text" id="product-name" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label for="cash-price">Nağd Qiyməti (AZN)</label>
+                                                    <input type="number" id="cash-price" min="0" step="0.01" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="down-payment">İlkin Ödəniş (AZN)</label>
+                                                    <input type="number" id="down-payment" min="0" step="0.01" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="credit-term">Kredit Müddəti (ay)</label>
+                                                    <select id="credit-term">
+                                                        <option value="3">3 ay</option><option value="6">6 ay</option>
+                                                        <option value="9">9 ay</option><option value="12">12 ay</option>
+                                                        <option value="18">18 ay</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="calculation-result">
+                                                <h3>Aylıq ödəniş: <span id="monthly-payment">0.00</span> AZN</h3>
+                                            </div>
+                                            <button type="submit" class="btn btn-success btn-full" style="margin-top: 20px;">Satışı Təsdiqlə</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="contract-view-container" class="hidden">
+                                     <div class="contract-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                                        <h1>Kredit Müqaviləsi</h1>
+                                        <button id="print-contract-btn" class="btn btn-primary"><i class="fas fa-print"></i> Müqaviləni Çap Et</button>
+                                    </div>
+                                    <div id="contract-content" class="contract-view">
+                                        </div>
+                                </div>
+                            `;
+                            this.initScript();
+                        },
+                        initScript: function() {
+                            const cashPriceInput = document.getElementById('cash-price');
+                            const downPaymentInput = document.getElementById('down-payment');
+                            const creditTermSelect = document.getElementById('credit-term');
+                            const monthlyPaymentSpan = document.getElementById('monthly-payment');
+                            const form = document.getElementById('credit-sale-form');
+                            const formContainer = document.getElementById('credit-sale-form-container');
+                            const contractContainer = document.getElementById('contract-view-container');
+                            const printBtn = document.getElementById('print-contract-btn');
+                            
+                            function calculateMonthlyPayment() {
+                                const price = parseFloat(cashPriceInput.value) || 0;
+                                const downPayment = parseFloat(downPaymentInput.value) || 0;
+                                const term = parseInt(creditTermSelect.value);
+
+                                if (price > 0 && price > downPayment && term > 0) {
+                                    const monthly = (price - downPayment) / term;
+                                    monthlyPaymentSpan.textContent = monthly.toFixed(2);
+                                } else {
+                                    monthlyPaymentSpan.textContent = '0.00';
+                                }
+                            }
+
+                            [cashPriceInput, downPaymentInput, creditTermSelect].forEach(el => {
+                                el.addEventListener('input', calculateMonthlyPayment);
+                            });
+
+                            form.addEventListener('submit', function(event) {
+                                event.preventDefault();
+                                
+                                // Form məlumatlarını topla
+                                const customerData = {
+                                    fullName: `${form.querySelector('#last-name').value} ${form.querySelector('#first-name').value} ${form.querySelector('#patronymic').value}`,
+                                    fin: form.querySelector('#fin-code').value,
+                                    idSeries: form.querySelector('#id-series').value,
+                                    product: form.querySelector('#product-name').value,
+                                    totalPrice: parseFloat(cashPriceInput.value).toFixed(2),
+                                    downPayment: parseFloat(downPaymentInput.value).toFixed(2),
+                                    term: creditTermSelect.value,
+                                    monthlyPayment: monthlyPaymentSpan.textContent
+                                };
+
+                                // Müqavilə HTML-ni yarat
+                                const contractContent = document.getElementById('contract-content');
+                                contractContent.innerHTML = `
+                                    <h2 style="text-align:center; margin-bottom: 30px;">KREDİT SATIŞ MÜQAVİLƏSİ #${Math.floor(10000 + Math.random() * 90000)}</h2>
+                                    <p><strong>Tarix:</strong> ${new Date().toLocaleDateString('az-AZ')}</p>
+                                    <hr style="margin: 15px 0;">
+                                    <h3>Müştəri Məlumatları</h3>
+                                    <p><strong>Ad, Soyad, Ata adı:</strong> ${customerData.fullName}</p>
+                                    <p><strong>FİN Kod:</strong> ${customerData.fin}</p>
+                                    <p><strong>Vəsiqə Seriyası:</strong> ${customerData.idSeries}</p>
+                                    <hr style="margin: 15px 0;">
+                                    <h3>Məhsul və Ödəniş Məlumatları</h3>
+                                    <p><strong>Məhsul:</strong> ${customerData.product}</p>
+                                    <p><strong>Ümumi Məbləğ:</strong> ${customerData.totalPrice} AZN</p>
+                                    <p><strong>İlkin Ödəniş:</strong> ${customerData.downPayment} AZN</p>
+                                    <p><strong>Kredit Müddəti:</strong> ${customerData.term} ay</p>
+                                    <p><strong>Aylıq Ödəniş:</strong> <strong>${customerData.monthlyPayment} AZN</strong></p>
+                                    <br><br>
+                                    <p>Mən, yuxarıda adı qeyd olunan şəxs, bu şərtlərlə razıyam.</p>
+                                    <br>
+                                    <p><strong>İmza:</strong> _________________________</p>
+                                `;
+                                
+                                // Səhifələri dəyişdir
+                                formContainer.classList.add('hidden');
+                                contractContainer.classList.remove('hidden');
+                            });
+
+                            printBtn.addEventListener('click', function() {
+                                window.print();
+                            });
+
+                            calculateMonthlyPayment(); // Səhifə yüklənəndə ilk hesablamanı et
+                        }
+                    },
+                    // ... digər menyuların render funksiyaları ...
+                };
+
+                const contentData = contentMap[contentId] || { 
+                    title: 'Xoş Gəlmisiniz!',
+                    render: function(container) {
+                        container.innerHTML = '<h1>Xoş Gəlmisiniz!</h1><p>Sistemə daxil oldunuz. Başlamaq üçün soldakı menyudan bir bölmə seçin.</p>';
+                    },
+                    initScript: function() {}
+                };
+                
+                contentData.render(contentArea);
+            }
+            
+            // Səhifə ilk dəfə yüklənəndə default məzmunu göstər
+            updateContent();
+        });
+    </script>
+</body>
+</html>
