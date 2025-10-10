@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müasir İdarəetmə Paneli</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* CSS stilləri əvvəlki kimi qaldığı üçün qısaldılıb... stillər dəyişməyib */
+        :root {
+            --sidebar-bg: #1e293b;
+            --sidebar-hover-bg: #334155;
+            --sidebar-active-bg: #4f46e5;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --main-bg: #f1f5f9;
+            --content-text: #0f172a;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--main-bg);
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: width 0.3s ease;
+            animation: slideInFromLeft 0.5s ease-out;
+        }
+
+        .sidebar-header {
+            padding: 0 25px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header .logo-icon {
+            font-size: 28px;
+            color: var(--sidebar-active-bg);
+            margin-right: 15px;
+        }
+
+        .sidebar-header h2 {
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+        .menu-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .menu-list > li > a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 2px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .menu-list > li > a:hover {
+            background-color: var(--sidebar-hover-bg);
+            color: var(--text-primary);
+        }
+        
+        .menu-list .menu-icon {
+            font-size: 18px;
+            width: 25px;
+            margin-right: 20px;
+            text-align: center;
+        }
+        
+        .arrow-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        li.open > a .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            list-style: none;
+            padding-left: 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        
+        li.open > .submenu {
+            max-height: 500px;
+        }
+        
+        .submenu li a {
+            display: block;
+            padding: 12px 20px 12px 40px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .submenu li a::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+        
+        .submenu li a:hover {
+            color: var(--text-primary);
+        }
+        .submenu li a:hover::before {
+            background-color: var(--text-primary);
+        }
+        
+        .submenu li a.active {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .submenu li a.active::before {
+            background-color: var(--sidebar-active-bg);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            margin-left: 280px;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+        }
+
+        #content-area {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            min-height: 80vh;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+         #content-area h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--content-text);
+            margin-bottom: 10px;
+        }
+        
+        #content-area p {
+            font-size: 16px;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-cubes logo-icon"></i>
+            <h2>Sistem</h2>
+        </div>
+        <ul class="menu-list">
+            <li> <a href="#">
+                    <i class="fas fa-shopping-cart menu-icon"></i>
+                    <span class="menu-text">Satış</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="satis-nagd">Nağd satış</a></li>
+                    <li><a href="#" class="submenu-item" data-content="satis-kredit">Kredit satışı</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-credit-card menu-icon"></i>
+                    <span class="menu-text">Ödəniş</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="odenis-medaxil">Kassa mədaxil</a></li>
+                    <li><a href="#" class="submenu-item" data-content="odenis-gunsonu">Kassa gün sonu</a></li>
+                    <li><a href="#" class="submenu-item" data-content="odenis-qaliq">Kassa qalığı</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-users menu-icon"></i>
+                    <span class="menu-text">Müştəri</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="musteri-yeni">Yeni müştəri</a></li>
+                    <li><a href="#" class="submenu-item" data-content="musteri-analiz">Müştəri analizi</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-chart-pie menu-icon"></i>
+                    <span class="menu-text">Hesabat</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="hesabat-satis">Satış hesabatı</a></li>
+                    <li><a href="#" class="submenu-item" data-content="hesabat-kassa">Kassa Hesabatı</a></li>
+                    <li><a href="#" class="submenu-item" data-content="hesabat-bank">Bank ödənişləri</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Tənzimləmlər</span>
+                    <i class="fas fa-chevron-right arrow-icon"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="#" class="submenu-item" data-content="tenzim-sifre">Şifrə yeniləmə</a></li>
+                    <li><a href="#" class="submenu-item" data-content="tenzim-magaza">Mağaza məlumatları</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div id="content-area">
+            </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainMenuItems = document.querySelectorAll('.menu-list > li > a');
+            const submenuItems = document.querySelectorAll('.submenu-item');
+            const contentArea = document.getElementById('content-area');
+
+            mainMenuItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const parentLi = this.parentElement;
+                    
+                    document.querySelectorAll('.menu-list > li').forEach(li => {
+                        if (li !== parentLi && li.classList.contains('open')) {
+                            li.classList.remove('open');
+                        }
+                    });
+                    
+                    parentLi.classList.toggle('open');
+                });
+            });
+
+            submenuItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    submenuItems.forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    const contentId = this.dataset.content;
+                    updateContent(contentId);
+                });
+            });
+
+            function updateContent(contentId) {
+                const contentMap = {
+                    'satis-nagd': { title: 'Nağd Satış', desc: 'Nağd satış əməliyyatları üçün interfeys burada olacaq.' },
+                    'satis-kredit': { title: 'Kredit Satışı', desc: 'Kreditlə satış və müqavilələr üçün interfeys burada olacaq.' },
+                    'odenis-medaxil': { title: 'Kassa Mədaxil', desc: 'Kassaya mədaxil əməliyyatları üçün forma burada olacaq.' },
+                    'odenis-gunsonu': { title: 'Kassa Gün Sonu Hesabatı', desc: 'Günün sonunda kassa hesabatını formalaşdırmaq üçün bölmə.' },
+                    'odenis-qaliq': { title: 'Kassa Qalığının Yoxlanması', desc: 'Kassadakı mövcud qalığı yoxlamaq üçün interfeys.' },
+                    'musteri-yeni': { title: 'Yeni Müştəri Əlavə Et', desc: 'Yeni müştəri qeydiyyatı üçün forma burada olacaq.' },
+                    'musteri-analiz': { title: 'Müştəri Analizi', desc: 'Müştəri davranışları və statistikaları burada göstəriləcək.' },
+                    'hesabat-satis': { title: 'Satış Hesabatı', desc: 'Tarix aralığına görə detallı satış hesabatları.' },
+                    'hesabat-kassa': { title: 'Kassa Hesabatı', desc: 'Mədaxil, məxaric və dövriyyə hesabatları.' },
+                    'hesabat-bank': { title: 'Bank Ödənişləri', desc: 'Bank vasitəsilə edilən ödənişlərin izlənməsi.' },
+                    'tenzim-sifre': { title: 'Şifrəni Yenilə', desc: 'İstifadəçi şifrəsini dəyişmək üçün forma.' },
+                    'tenzim-magaza': { title: 'Mağaza Məlumatları', desc: 'Mağazanın adını, ünvanını və digər detalları tənzimləmək üçün bölmə.' }
+                };
+
+                const content = contentMap[contentId] || { title: 'Xoş Gəlmisiniz!', desc: 'Sistemə daxil oldunuz. Başlamaq üçün soldakı menyudan bir bölmə seçin.' };
+                
+                contentArea.style.animation = 'none';
+                contentArea.innerHTML = `<h1>${content.title}</h1><p>${content.desc}</p>`;
+                void contentArea.offsetWidth; 
+                contentArea.style.animation = 'fadeIn 0.6s ease-out forwards';
+            }
+            
+            // DƏYİŞİKLİK: Səhifə ilk yüklənəndə standart "Xoş Gəlmisiniz" məzmununu göstər
+            updateContent();
+
+        });
+    </script>
+
+</body>
+</html>
